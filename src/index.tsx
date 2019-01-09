@@ -1,7 +1,9 @@
 
 import * as React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import style from './styles';
+import store from './store'
 import './icons';
 
 import {Toolbar} from './toolbar'
@@ -12,13 +14,15 @@ import {PresentView} from './presentation'
 class App extends React.Component {
     render() {
         return (
-            <div id={style("root")}>
-                <Toolbar/>
-                <div className={style("split-view")}>
-                    <EditorView/>
-                    <PresentView/>
+            <Provider store={store}>
+                <div id={style("root")}>
+                    <Toolbar/>
+                    <div className={style("split-view")}>
+                        <EditorView/>
+                        <PresentView/>
+                    </div>
                 </div>
-            </div>
+            </Provider>
         )
     }
 }

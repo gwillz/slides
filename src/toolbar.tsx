@@ -2,6 +2,7 @@
 import * as React from 'react';
 import styles from './styles';
 import {Button} from './button';
+import store from './store';
 
 export class Toolbar extends React.Component {
     private file: HTMLInputElement | null;
@@ -14,20 +15,20 @@ export class Toolbar extends React.Component {
     
     handleSave = () => {
         if (!this.link) return;
-        let text = "# hella\n";
         
-        const url = URL.createObjectURL(new Blob([text]));
+        const {content} = store.getState();
+        const url = URL.createObjectURL(new Blob([content]));
         this.link.setAttribute("href", url);
         this.link.click();
         URL.revokeObjectURL(url);
     }
     
     handlePreview = () => {
-        
+        store.dispatch({type: "RENDER"});
     }
     
     handlePresent = () => {
-        
+        store.dispatch({type: "FULLSCREEN"});
     }
     
     componentDidMount() {
@@ -45,7 +46,10 @@ export class Toolbar extends React.Component {
         
         const reader = new FileReader();
         reader.onload = () => {
-            console.log(reader.result);
+            store.dispatch({
+                type: "LOAD",
+                content: reader.result + "",
+            })
         }
         reader.readAsText(this.file.files[0]);
     }

@@ -1,6 +1,8 @@
 
 @import "reset.css";
 @import "draft-js";
+@import "primer-markdown/build/build.css";
+@import "highlight.js/styles/atom-one-light.css";
 
 html, body {
     box-sizing: border-box;
@@ -22,11 +24,15 @@ html, body {
     width: 100%;
 }
 
+.public-DraftEditor-content {
+    font-family: monospace;
+    font-size: 14px;
+}
+
 .split-view {
     display: flex;
     flex: 1 1 auto;
-    height: 100%;
-    padding: 10px;
+    height: calc(100% - 50px);
     
     & > * {
         flex: 1 1 auto;
@@ -35,7 +41,43 @@ html, body {
 }
 
 .present {
+    background: white;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
     
+    & .slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border: 1px solid #eee;
+        position: relative;
+        height: 33vw;
+        width: 100%;
+    }
+}
+
+@media all and (display-mode: fullscreen) {
+    .present {
+        overflow-y: hidden;
+        
+        & .slide {
+            border: none;
+            display: none;
+            height: 100%;
+            position: absolute;
+            
+            &.active {
+                display: flex;
+            }
+        }
+    }
+}
+
+.markdown-body pre {
+    font-family: monospace;
+    text-align: left;
 }
 
 .toolbar {
@@ -46,7 +88,7 @@ html, body {
 }
 
 .editor {
-    
+    padding: 10px;
 }
 
 .button {
