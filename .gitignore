@@ -2,3 +2,4 @@ node_modules
 cache
 public/*
 !public/index.html
+css/*.ts
