@@ -1,9 +1,10 @@
 
-
 @import "reset.css";
+@import "draft-js";
 
 html, body {
     box-sizing: border-box;
+    font-family: sans-serif;
     height: 100%;
     width: 100%;
     margin: 0;
@@ -15,7 +16,49 @@ html, body {
 }
 
 #root {
+    display: flex;
+    flex-direction: column;
     height: 100%;
     width: 100%;
 }
 
+.split-view {
+    display: flex;
+    flex: 1 1 auto;
+    height: 100%;
+    padding: 10px;
+    
+    & > * {
+        flex: 1 1 auto;
+        max-width: 50%;
+    }
+}
+
+.present {
+    
+}
+
+.toolbar {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.editor {
+    
+}
+
+.button {
+    background: #eee;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    cursor: pointer;
+    min-width: 30px;
+    padding: 5px;
+    text-align: center;
+    
+    & + .button {
+        margin-left: 10px;
+    }
+}

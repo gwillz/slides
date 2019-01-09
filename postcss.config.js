@@ -16,7 +16,8 @@ module.exports = {
         },
         'autoprefixer': {},
         'postcss-modules': {
-            generateScopedName: isProduction ? 'gt[sha1:hash:hex:4]' : '[local]',
+            // generateScopedName: isProduction ? 'gt[sha1:hash:hex:4]' : '[local]',
+            generateScopedName: '[local]',
             getJSON: (cssFileName, content) => {
                 typescriptCss({
                     cssFileName,

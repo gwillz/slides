@@ -2,10 +2,11 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import style from './styles';
+import './icons';
 
 import {Toolbar} from './toolbar'
-import {Editor} from './editor'
-import {Presentation} from './presentation'
+import {EditorView} from './editor'
+import {PresentView} from './presentation'
 
 
 class App extends React.Component {
@@ -14,8 +15,8 @@ class App extends React.Component {
             <div id={style("root")}>
                 <Toolbar/>
                 <div className={style("split-view")}>
-                    <Editor/>
-                    <Presentation/>
+                    <EditorView/>
+                    <PresentView/>
                 </div>
             </div>
         )

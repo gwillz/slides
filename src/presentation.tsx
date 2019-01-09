@@ -3,7 +3,7 @@ import * as React from 'react';
 import styles from './styles';
 
 
-export class Presentation extends React.Component {
+export class PresentView extends React.Component {
     render() {
         return (
             <div className={styles('present')}>
