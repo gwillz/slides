@@ -1,0 +1,21 @@
+
+
+@import "reset.css";
+
+html, body {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}
+

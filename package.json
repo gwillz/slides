@@ -1,0 +1,52 @@
+{
+  "name": "slides",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "webpack": "webpack --progress",
+    "postcss": "postcss --verbose -o public/index.css css/index.css",
+    "clean": "rm public/*.{js,map,css}",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.12",
+    "@fortawesome/free-solid-svg-icons": "^5.6.3",
+    "@fortawesome/react-fontawesome": "^0.1.3",
+    "draft-js": "^0.10.5",
+    "express": "^4.16.4",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "reset.css": "^2.0.2",
+    "showdown": "^1.9.0"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.7",
+    "@types/draft-js": "^0.10.27",
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-redux": "^6.0.12",
+    "@types/redux": "^3.6.0",
+    "@types/showdown": "^1.9.1",
+    "autoprefixer": "^9.4.4",
+    "classnames": "^2.2.6",
+    "cssnano": "^4.1.8",
+    "fork-ts-checker-webpack-plugin": "^0.5.2",
+    "postcss": "^7.0.7",
+    "postcss-cli": "^6.1.1",
+    "postcss-import": "^12.0.1",
+    "postcss-modules": "^1.4.1",
+    "postcss-preset-env": "^6.5.0",
+    "postcss-typescript-css": "^0.2.1",
+    "ts-loader": "^5.3.3",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.1"
+  }
+}

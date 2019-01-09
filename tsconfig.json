@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "es5",
+        "lib": ["es6", "es2017", "dom"],
+        "sourceMap": true,
+        "importHelpers": true,
+        "jsx": "react",
+        "moduleResolution": "node",
+        "forceConsistentCasingInFileNames": false,
+        "noImplicitReturns": true,
+        "noImplicitThis": false,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": false,
+        "noUnusedLocals": false
+    },
+    "include": [
+        "./src/*",
+        "./css/*",
+        "./types/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "public"
+    ]
+}
