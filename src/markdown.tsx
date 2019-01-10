@@ -19,7 +19,6 @@ const markdown = new showdown.Converter({
     
     plugins.default.forEach(plugin => {
         markdown.addExtension(plugin, plugin.name);
-        console.log('loaded', plugin.name);
     });
     
     store.dispatch({type: 'RENDER'});

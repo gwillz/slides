@@ -42,7 +42,11 @@ function reducer(state = INIT_STATE, action: Action) {
     }
 }
 
-const store = createStore(reducer);
+const store = createStore(
+    reducer,
+    // @ts-ignore
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 export default store;
 
 export type Store = typeof store;
