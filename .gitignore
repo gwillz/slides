@@ -3,3 +3,5 @@ cache
 public/*
 !public/index.html
 css/*.ts
+*.log
+.firebase

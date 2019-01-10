@@ -2,12 +2,13 @@
   "name": "slides",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "webpack": "webpack --progress",
     "postcss": "postcss --verbose -o public/index.css css/index.css",
-    "clean": "rm public/*.{js,map,css}",
+    "clean": "rm public/*.js public/*.css public/*.map || echo clean!",
+    "deploy": "firebase deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
