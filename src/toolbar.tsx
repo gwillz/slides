@@ -4,7 +4,7 @@ import styles from './styles';
 import {Button} from './button';
 import store from './store';
 
-export class Toolbar extends React.Component {
+export class Toolbar extends React.PureComponent {
     private file: HTMLInputElement | null;
     private link: HTMLElement | null;
     

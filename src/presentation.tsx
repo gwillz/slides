@@ -3,7 +3,6 @@ import * as React from 'react';
 import styles from './styles';
 import store from './store';
 import { Markdown } from './markdown';
-import { connect } from 'react-redux';
 import { Unsubscribe } from 'redux';
 
 type State = {
@@ -11,7 +10,7 @@ type State = {
     active: number;
 }
 
-export class PresentView extends React.Component<{}, State> {
+export class PresentView extends React.PureComponent<{}, State> {
     state: State = {
         slides: [],
         active: 0,

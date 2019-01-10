@@ -2,9 +2,6 @@
 /* Adapted from modest.css */
 /* http://markdowncss.github.io/modest/ */
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,700);
-@import url(https://fonts.googleapis.com/css?family=Arimo:700,700italic);
-
 .md {
     & pre,
     & code {
@@ -21,12 +18,14 @@
     
     & pre code {
         background-color: inherit;
+        display: block;
         margin: 1em;
         padding: 0;
     }
     
     & pre {
         background-color: #232323;
+        color: #e8e8e8;
         line-height: 1.25;
         padding: .5em;
         margin: 0 auto .75em;
@@ -113,7 +112,7 @@
 }
 
 .md {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.85;
     color: #444;
     font-family: 'Open Sans', sans-serif;
@@ -123,14 +122,9 @@
     padding: .25em;
 }
 
-@media screen and (min-width: 32em) and (max-width: 48em) {
+@media screen and (display-mode: fullscreen) {
     .md {
-        font-size: 14px;
+        font-size: 26px;
     }
 }
 
-@media screen and (min-width: 48em) {
-    .md {
-        font-size: 16px;
-    }
-}

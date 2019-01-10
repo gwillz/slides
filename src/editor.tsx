@@ -21,7 +21,7 @@ type State = {
     draft: EditorState;
 }
 
-export class EditorView extends React.Component<{}, State> {
+export class EditorView extends React.PureComponent<{}, State> {
     
     private unsubscribe: Unsubscribe;
     private timer: number;

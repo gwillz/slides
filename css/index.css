@@ -69,6 +69,7 @@ html, body {
             outline: none;
             display: none;
             height: 100%;
+            padding: 5%;
             position: absolute;
             
             &.active {
