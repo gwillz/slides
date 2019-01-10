@@ -2,6 +2,9 @@ node_modules
 cache
 public/*
 !public/index.html
+!public/404.html
+!public/favicon.ico
 css/*.ts
 *.log
 .firebase
+report.html

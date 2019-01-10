@@ -1,5 +1,7 @@
 // @ts-check
 const path = require('path')
+const BundleAnalyzerPlugin  = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 const presetMode = process.env.NODE_ENV || 'development';
 const isProduction = (presetMode === 'production');
 
@@ -47,4 +49,15 @@ module.exports = {
             '.ts', '.ts.d', '.tsx',
         ],
     },
+    plugins: [],
+}
+
+if (isProduction) {
+    module.exports.plugins = module.exports.plugins.concat([
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            openAnalyzer: false,
+            reportFilename: path.resolve(__dirname, 'report.html'),
+        }),
+    ])
 }

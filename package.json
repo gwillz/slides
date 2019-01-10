@@ -8,7 +8,7 @@
     "webpack": "webpack --progress",
     "postcss": "postcss --verbose -o public/index.css css/index.css",
     "clean": "rm public/*.js public/*.css public/*.map || echo clean!",
-    "deploy": "firebase deploy",
+    "deploy": "bash deploy.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -53,6 +53,7 @@
     "tslint": "^5.12.0",
     "typescript": "^3.2.2",
     "webpack": "^4.28.3",
+    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.2.1"
   }
 }
