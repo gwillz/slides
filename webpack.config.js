@@ -22,7 +22,7 @@ module.exports = {
         removeAvailableModules: false,
         removeEmptyChunks: false,
         splitChunks: {
-            chunks: 'initial',
+            chunks: 'all',
         },
     },
     performance: {

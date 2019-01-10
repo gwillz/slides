@@ -1,5 +1,5 @@
 
 declare module 'showdown-highlight' {
-    const showdownHighlight: any;
+    const showdownHighlight: Function;
     export = showdownHighlight;
 }

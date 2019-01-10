@@ -1,9 +1,8 @@
 
 import * as React from 'react'
 import * as showdown from 'showdown'
-import * as showdownHighlight from 'showdown-highlight'
-import showdownCopyCode from './showdown-copycode'
 import styles from './styles'
+import store from './store';
 
 type Props = {
     content: string;
@@ -13,40 +12,51 @@ const markdown = new showdown.Converter({
     simplifiedAutoLink: true,
     excludeTrailingPunctuationFromURLs: true,
     tables: true,
-    extensions: [
-        showdownHighlight,
-        showdownCopyCode,
-    ],
 })
 
-export class Markdown extends React.PureComponent<Props> {
+;(async function() {
+    const plugins = await import('./showdown-plugins' /* webpackChunkName: 'plugins' */);
+    
+    plugins.default.forEach(plugin => {
+        markdown.addExtension(plugin, plugin.name);
+        console.log('loaded', plugin.name);
+    });
+    
+    store.dispatch({type: 'RENDER'});
+})();
+
+function doCopy(text: string) {
+    const element = document.createElement('textarea');
+    element.value = text;
+    element.style.position = 'absolute';
+    element.style.left = '-9999px';
+    
+    document.body.appendChild(element);
+    element.select();
+    document.execCommand('copy');
+    document.body.removeChild(element);
+}
+
+export class Markdown extends React.Component<Props> {
     private element: HTMLElement | null;
     
     componentDidMount() {
-        if (!this.element) return;
-        
-        this.element.querySelectorAll('.code-button')
-        .forEach(button => {
-            button.addEventListener("click", this.handleCopy)
-        })
-    }
-    
-    handleCopy = (event: MouseEvent) => {
-        if (!event.currentTarget) return;
-        event.stopPropagation();
-        
-        const button = event.currentTarget as HTMLElement;
-        const target = button.previousElementSibling as HTMLElement;
-        
-        const text = document.createElement('textarea');
-        text.value = target.innerText;
-        text.style.position = 'absolute';
-        text.style.left = '-9999px';
-        
-        document.body.appendChild(text);
-        text.select();
-        document.execCommand('copy');
-        document.body.removeChild(text);
+        // mounted, but rendering is delayed by makeHtml() / DOM insertion.
+        setTimeout(() => {
+            if (!this.element) return;
+            this.element.querySelectorAll('.code-button')
+            .forEach(button => {
+                
+                const target = button.previousElementSibling as HTMLElement;
+                if (!target) return;
+                
+                button.addEventListener("click", event => {
+                    event.stopPropagation();
+                    doCopy(target.innerText);
+                    return true;
+                });
+            })
+        }, 300);
     }
     
     render() {
