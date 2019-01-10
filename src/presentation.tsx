@@ -27,9 +27,8 @@ export class PresentView extends React.Component<{}, State> {
             case "FULLSCREEN":
                 this.goFullscreen();
                 // fallthrough
-            case "RENDER": {
+            case "RENDER":
                 this.doRender();
-            }
         }
     }
     
@@ -54,6 +53,7 @@ export class PresentView extends React.Component<{}, State> {
                 break;
             
             case "F1":
+                this.doRender();
                 this.goFullscreen();
                 break;
         }

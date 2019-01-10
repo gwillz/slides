@@ -16,6 +16,7 @@ export class Toolbar extends React.Component {
     handleSave = () => {
         if (!this.link) return;
         
+        // @todo this should be elsewhere
         const {content} = store.getState();
         const url = URL.createObjectURL(new Blob([content]));
         this.link.setAttribute("href", url);

@@ -1,8 +1,8 @@
 
 @import "reset.css";
 @import "draft-js";
-@import "primer-markdown/build/build.css";
-@import "highlight.js/styles/atom-one-light.css";
+@import "highlight.js/styles/railscasts.css";
+@import "./modest.css";
 
 html, body {
     box-sizing: border-box;
@@ -52,6 +52,7 @@ html, body {
         justify-content: center;
         text-align: center;
         border: 1px solid #eee;
+        overflow: hidden;
         position: relative;
         height: 33vw;
         width: 100%;
@@ -73,11 +74,6 @@ html, body {
             }
         }
     }
-}
-
-.markdown-body pre {
-    font-family: monospace;
-    text-align: left;
 }
 
 .toolbar {

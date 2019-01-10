@@ -1,14 +1,25 @@
 
 import * as React from 'react';
 import { Unsubscribe } from 'redux';
-import { EditorState, Editor, Modifier, SelectionState, ContentState } from 'draft-js';
+import { EditorState, Editor, ContentState, getDefaultKeyBinding, Modifier } from 'draft-js';
 import styles from './styles';
-import store, {State as StoreState} from './store';
+import store from './store';
+
+const TAB = "    ";
+
+function keyBinding(e: React.KeyboardEvent): string | null {
+    if (e.key == "Enter" && e.ctrlKey) {
+        return 'editor-render';
+    }
+    if (e.key == "S" && e.ctrlKey) {
+        return 'editor-save';
+    }
+    return getDefaultKeyBinding(e);
+}
 
 type State = {
     draft: EditorState;
 }
-
 
 export class EditorView extends React.Component<{}, State> {
     
@@ -19,6 +30,7 @@ export class EditorView extends React.Component<{}, State> {
         draft: EditorState.createEmpty(),
     }
     
+    // @todo I hate this. Why is state management such a bitch?
     private handleStore = () => {
         const state = store.getState();
         if (state.action == "LOAD") {
@@ -40,6 +52,32 @@ export class EditorView extends React.Component<{}, State> {
         }, 350);
     }
     
+    private handleCommand = (command: string) => {
+        switch (command) {
+            case 'editor-render':
+            case 'editor-save':
+                return 'handled';
+            default:
+                return 'not-handled';
+        }
+    }
+    
+    public insertTab = (e?: React.KeyboardEvent<{}>) => {
+        if (e) {
+            e.preventDefault();
+            if (e.ctrlKey || e.shiftKey || e.altKey) return;
+        }
+        this.setState(({draft}) => ({
+            draft: EditorState.push(
+                draft,
+                Modifier.insertText(
+                    draft.getCurrentContent(), 
+                    draft.getSelection(), 
+                    TAB),
+                "insert-characters"),
+        }));
+    }
+    
     componentDidMount() {
         this.unsubscribe = store.subscribe(this.handleStore);
     }
@@ -55,6 +93,9 @@ export class EditorView extends React.Component<{}, State> {
                     placeholder="Thnx!"
                     editorState={this.state.draft}
                     onChange={this.handleChange}
+                    onTab={this.insertTab}
+                    keyBindingFn={keyBinding}
+                    handleKeyCommand={this.handleCommand}
                 />
             </div>
         )
