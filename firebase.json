@@ -2,6 +2,11 @@
   "hosting": {
     "public": "public",
     "ignore": [
+      "*.md",
+      "*.map",
+      "*.log",
+      "src/",
+      "css/",
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
