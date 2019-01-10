@@ -56,26 +56,27 @@ export class Toolbar extends React.Component {
     }
     
     render() {
+        // @todo ctrl+s, ctrl+o don't work atm.
         return (
             <div className={styles('toolbar')}>
                 <Button
                     icon="file-import"
-                    title="Load from disk"
+                    title="Load from disk (Ctrl+O)"
                     onClick={this.handleLoad}
                 />
                 <Button 
                     icon="save"
-                    title="Save to disk"
+                    title="Save to disk (Ctrl+S)"
                     onClick={this.handleSave}
                 />
                 <Button 
                     icon="running" 
-                    title="Render Preview" 
+                    title="Render Preview (Ctrl+Enter)"
                     onClick={this.handlePreview}
                 />
                 <Button 
                     icon="play" 
-                    title="Present Slideshow"
+                    title="Present Slideshow (F1)"
                     onClick={this.handlePresent}
                 />
                 
