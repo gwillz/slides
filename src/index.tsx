@@ -44,7 +44,7 @@ class App extends React.Component<{}, State> {
     render() {
         return (
             <Provider store={store}>
-                <div id={style("root")} className={style({
+                <div id={style('app')} className={style({
                     dark: this.state.dark,
                 })}>
                     <Toolbar/>

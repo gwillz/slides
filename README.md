@@ -8,12 +8,22 @@
     - or use something else (prism.js?)
 - implement Ctrl+S, Ctrl+O
     - shift save/open logic elsewhere
-- persistant storage, because it's friendly
+- persistant storage
+  - store editor state
+  - save/load files to localStorage
 - fix CSS hover for 'copy' button
 - add help page/dialog
-- comments `[//]: # (etc)`
+- comments `[//]: # (etc)` as notes
+- image position (use alt='left|right|top-left|etc')
+- 'scroll to bottom' shortcut
+- printing
+    - better styles (remove parent flexboxes)
+    - outline code blocks
+    - print button
+
 
 ## DONE
+- printing styles
 - add clear-all button
 - dark mode
 

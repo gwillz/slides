@@ -1,4 +1,4 @@
-
+@media screen {
 .dark {
     color: #fff;
     background: #232323;
@@ -24,4 +24,5 @@
     & .present {
         background-color: inherit;
     }
+}
 }
