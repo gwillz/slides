@@ -16,6 +16,7 @@ export class PresentView extends React.PureComponent<{}, State> {
         active: 0,
     }
     
+    private lastSelection = "";
     private element: HTMLElement | null;
     private unsubscribe: Unsubscribe;
     
@@ -59,15 +60,24 @@ export class PresentView extends React.PureComponent<{}, State> {
         }
     }
     
+    private handleClick = (event: React.MouseEvent) => {
+        if (event.type === "click") {
+            const selection = window.getSelection().toString();
+            
+            if (!selection && !this.lastSelection) {
+                this.next();
+            }
+            this.lastSelection = selection;
+        }
+    }
+    
     componentDidMount() {
         this.unsubscribe = store.subscribe(this.handleStore);
-        // const root = document.getElementById("root");
         window.addEventListener("keyup", this.handleKey);
     }
     
     componentWillUnmount() {
         this.unsubscribe();
-        // const root = document.getElementById("root");
         window.addEventListener("keyup", this.handleKey);
     }
     
@@ -86,13 +96,13 @@ export class PresentView extends React.PureComponent<{}, State> {
         })
     }
     
-    public next = () => {
+    public next() {
         this.setState(state => ({
             active: Math.min(state.slides.length, state.active + 1),
         }))
     }
     
-    public previous = () => {
+    public previous() {
         this.setState(state => ({
             active: Math.max(0, state.active - 1),
         }))
@@ -101,7 +111,7 @@ export class PresentView extends React.PureComponent<{}, State> {
     render() {
         return (
             <div ref={r => this.element = r}
-                onClick={this.next}
+                onClick={this.handleClick}
                 className={styles('present')}>
                 {this.state.slides.map((slide, i) => (
                     <div key={i} className={styles({
@@ -116,4 +126,3 @@ export class PresentView extends React.PureComponent<{}, State> {
     }
 }
 
-// export const PresentView = connect(m => m)(_PresentView);
