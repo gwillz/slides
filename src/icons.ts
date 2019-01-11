@@ -7,4 +7,7 @@ library.add(
     solid.faPlay,
     solid.faSave,
     solid.faFileImport,
+    solid.faBroom,
+    solid.faChalkboardTeacher,
+    solid.faAdjust,
 )

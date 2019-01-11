@@ -1,0 +1,97 @@
+
+
+.DraftEditor-root {
+    font-family: monospace;
+    font-size: 14px;
+    height: 100%;
+}
+
+.split-view {
+    display: flex;
+    flex: 1 1 auto;
+    height: calc(100% - 50px);
+    
+    & > * {
+        flex: 1 1 auto;
+        outline: 1px solid #ddd;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        max-width: 50%;
+    }
+}
+
+.present {
+    background: white;
+    position: relative;
+    
+    & .slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        outline: 1px solid #ddd;
+        overflow: hidden;
+        padding: 5%;
+        position: relative;
+        height: 33vw;
+        width: 100%;
+    }
+}
+
+@media all and (display-mode: fullscreen) {
+    .present {
+        overflow-y: hidden;
+        
+        & .slide {
+            outline: none;
+            display: none;
+            height: 100%;
+            position: absolute;
+            
+            &.active {
+                display: flex;
+            }
+        }
+    }
+}
+
+.toolbar {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.editor {
+    padding: 10px;
+}
+
+.button {
+    background: #eee;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    cursor: pointer;
+    min-width: 30px;
+    padding: 5px;
+    text-align: center;
+    
+    & + .button {
+        margin-left: 10px;
+    }
+}
+
+.md pre:hover .code-button {
+    opacity: 0.7;
+}
+
+.md .code-button {
+    float: right;
+    font-size: 0.7em;
+    opacity: 0;
+    padding: 2px 5px;
+    margin-top: calc(-1em - 10px);
+    
+    &:hover {
+        opacity: 1;
+    }
+}

@@ -9,6 +9,12 @@
 - implement Ctrl+S, Ctrl+O
     - shift save/open logic elsewhere
 - persistant storage, because it's friendly
+- fix CSS hover for 'copy' button
+- add help page/dialog
+- comments `[//]: # (etc)`
+
+## DONE
 - add clear-all button
+- dark mode
 
-
+[//]: # (this is a comment)

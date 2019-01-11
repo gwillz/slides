@@ -17,7 +17,7 @@
     }
     
     & pre code {
-        background-color: inherit;
+        background-color: inherit !important;
         display: block;
         margin: 1em;
         padding: 0;

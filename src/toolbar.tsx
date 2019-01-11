@@ -32,6 +32,14 @@ export class Toolbar extends React.PureComponent {
         store.dispatch({type: "FULLSCREEN"});
     }
     
+    handleClear = () => {
+        store.dispatch({type: "LOAD", content: ""});
+    }
+    
+    handleDark = () => {
+        store.dispatch({type: "DARK"});
+    }
+    
     componentDidMount() {
         if (!this.file) return;
         this.file.addEventListener('change', this.handleFileLoad);
@@ -69,17 +77,26 @@ export class Toolbar extends React.PureComponent {
                     title="Save to disk (Ctrl+S)"
                     onClick={this.handleSave}
                 />
+                <Button
+                    icon="broom"
+                    title="Clear"
+                    onClick={this.handleClear}
+                />
+                <Button
+                    icon="adjust"
+                    title="Dark Mode"
+                    onClick={this.handleDark}
+                />
                 <Button 
-                    icon="running" 
+                    icon="play"
                     title="Render Preview (Ctrl+Enter)"
                     onClick={this.handlePreview}
                 />
                 <Button 
-                    icon="play" 
+                    icon="chalkboard-teacher"
                     title="Present Slideshow (F1)"
                     onClick={this.handlePresent}
                 />
-                
                 <input 
                     type="file"
                     ref={r => this.file = r}

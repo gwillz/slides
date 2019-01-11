@@ -10,13 +10,38 @@ import './icons';
 import {Toolbar} from './toolbar'
 import {EditorView} from './editor'
 import {PresentView} from './presentation'
+import { Unsubscribe } from 'redux';
 
+type State = {
+    dark: boolean;
+}
 
-class App extends React.Component {
+class App extends React.Component<{}, State> {
+    state: State = {
+        dark: false,
+    }
+    
+    private unsubscribe: Unsubscribe;
+    
+    componentDidMount() {
+        this.unsubscribe = store.subscribe(this.handleStore);
+    }
+    
+    private handleStore = () => {
+        let state = store.getState();
+        if (state.action == "DARK") {
+            this.setState({
+                dark: state.dark,
+            })
+        }
+    }
+    
     render() {
         return (
             <Provider store={store}>
-                <div id={style("root")}>
+                <div id={style("root")} className={style({
+                    dark: this.state.dark,
+                })}>
                     <Toolbar/>
                     <div className={style("split-view")}>
                         <EditorView/>

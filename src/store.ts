@@ -3,8 +3,9 @@ import { createStore } from "redux";
 import * as React from 'react'
 
 export type State = {
-    action: 'LOAD' | 'EDIT' | 'SAVE' | 'FULLSCREEN' | 'RENDER' | null;
+    action: 'LOAD' | 'EDIT' | 'SAVE' | 'FULLSCREEN' | 'RENDER' | 'DARK' | null;
     content: string;
+    dark: boolean;
 }
 
 export type Action = {
@@ -19,11 +20,14 @@ export type Action = {
     type: 'RENDER';
 } | {
     type: 'FULLSCREEN';
+} | {
+    type: 'DARK';
 }
 
 const INIT_STATE: State = {
     action: null,
     content: '',
+    dark: false,
 }
 
 function reducer(state = INIT_STATE, action: Action) {
@@ -34,6 +38,12 @@ function reducer(state = INIT_STATE, action: Action) {
                 ...state,
                 action: action.type,
                 content: action.content,
+            }
+        case "DARK":
+            return {
+                ...state,
+                action: action.type,
+                dark: !state.dark,
             }
     }
     return {

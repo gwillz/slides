@@ -1,0 +1,27 @@
+
+.dark {
+    color: #fff;
+    background: #232323;
+    
+    & .md {
+        color: #ddd;
+        
+        & code, & pre, & blockquote {
+            background-color: #353535;
+        }
+        
+        & blockquote {
+            border-color: #666;
+        }
+    }
+    
+    & .button {
+        background: #444;
+        border-color: #777;
+        color: #eee;
+    }
+
+    & .present {
+        background-color: inherit;
+    }
+}
