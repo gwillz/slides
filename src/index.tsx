@@ -12,13 +12,18 @@ import {EditorView} from './editor'
 import {PresentView} from './presentation'
 import { Unsubscribe } from 'redux';
 
+const params = qs.parse(window.location.search.slice(1));
+
+const IS_DARK = typeof params.dark != 'undefined';
+const URL = params.url as string;
+
 type State = {
     dark: boolean;
 }
 
 class App extends React.Component<{}, State> {
     state: State = {
-        dark: false,
+        dark: IS_DARK,
     }
     
     private unsubscribe: Unsubscribe;
@@ -54,11 +59,12 @@ class App extends React.Component<{}, State> {
 }
 
 async function loadParams() {
-    const params = qs.parse(window.location.search.slice(1));
+    if (IS_DARK) {
+        store.dispatch({type: 'DARK'});
+    }
     
-    if (params.url) {
-        let url: string = params.url;
-        url = window.location.protocol + "//" + url.replace(/^http:/, '');
+    if (URL) {
+        let url = window.location.protocol + "//" + URL.replace(/^http:/, '');
         
         const req = await fetch(url, {
             mode: 'cors',
