@@ -142,7 +142,7 @@ export class PresentView extends React.PureComponent<Props, State> {
         window.addEventListener("keyup", this.handleKey);
         if (this.props.content) {
             this.doRender();
-            }
+        }
     }
     
     componentWillUnmount() {

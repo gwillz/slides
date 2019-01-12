@@ -29,6 +29,7 @@ type Props = DispatchProp & {
 
 type State = {
     draft: EditorState;
+    content: string;
 }
 
 export class EditorView extends React.PureComponent<Props, State> {
@@ -39,6 +40,7 @@ export class EditorView extends React.PureComponent<Props, State> {
     
     state: State = {
         draft: EditorState.createEmpty(),
+        content: '',
     }
     
     static getDerivedStateFromProps(props: Props, state: State) {
@@ -46,6 +48,7 @@ export class EditorView extends React.PureComponent<Props, State> {
             case 'LOAD':
             case 'persist/REHYDRATE':
                 return {
+                    content: props.content,
                     draft: EditorState.push(state.draft,
                         ContentState.createFromText(props.content), 
                         "insert-characters"),
@@ -72,13 +75,18 @@ export class EditorView extends React.PureComponent<Props, State> {
     }
     
     private handleChange = (draft: EditorState) => {
-        this.setState({ draft });
+        const content = draft.getCurrentContent().getPlainText('');
+        if (content === this.state.content) return;
         
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
-            const content = draft.getCurrentContent().getPlainText('');
             this.props.dispatch({ type: 'EDIT', content });
         }, 350);
+        
+        this.setState({ 
+            draft,
+            content,
+        });
     }
     
     private handleCommand = (command: string) => {
