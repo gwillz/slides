@@ -40,6 +40,11 @@ export class Toolbar extends React.PureComponent {
         store.dispatch({type: "DARK"});
     }
     
+    handlePrint = () => {
+        store.dispatch({type: "RENDER"});
+        setTimeout(() => window.print(), 250);
+    }
+    
     componentDidMount() {
         if (!this.file) return;
         this.file.addEventListener('change', this.handleFileLoad);
@@ -91,6 +96,11 @@ export class Toolbar extends React.PureComponent {
                     icon="play"
                     title="Render Preview (Ctrl+Enter)"
                     onClick={this.handlePreview}
+                />
+                <Button 
+                    icon="print"
+                    title="Print (with notes)"
+                    onClick={this.handlePrint}
                 />
                 <Button 
                     icon="chalkboard-teacher"
