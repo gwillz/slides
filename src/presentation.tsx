@@ -5,14 +5,30 @@ import store from './store';
 import { Markdown } from './markdown';
 import { Unsubscribe } from 'redux';
 
+const FILTER_NOTES = /\s*\[\/\/\]:\s*#\s*\(([^\n]+)\)/g;
+
+
+function recurseRegex(expr: RegExp, src: string, index = 0) {
+    let result = [];
+    while (true) {
+        let match = FILTER_NOTES.exec(src);
+        if (!match) break;
+        result.push(match[1]);
+    }
+    return result;
+}
+
+
 type State = {
     slides: string[];
+    notes: string[];
     active: number;
 }
 
 export class PresentView extends React.PureComponent<{}, State> {
     state: State = {
         slides: [],
+        notes: [],
         active: 0,
     }
     
@@ -84,7 +100,13 @@ export class PresentView extends React.PureComponent<{}, State> {
     public doRender() {
         const state = store.getState();
         const slides = state.content.split(/\n\s*---+\s*\n/);
-        this.setState({ slides });
+        const notes = slides.map(slide => (
+            recurseRegex(FILTER_NOTES, slide, 1)
+            .map(note => " + " + note)
+            .join('\n')
+        ));
+        
+        this.setState({ slides, notes });
     }
     
     public goFullscreen() {
@@ -114,12 +136,18 @@ export class PresentView extends React.PureComponent<{}, State> {
                 onClick={this.handleClick}
                 className={styles('present')}>
                 {this.state.slides.map((slide, i) => (
-                    <div key={i} className={styles({
+                <React.Fragment key={i}>
+                    <div className={styles({
                         slide: true,
                         active: i == this.state.active,
                     })}>
                         <Markdown content={slide}/>
                     </div>
+                    <Markdown
+                        className={styles('notes')}
+                        content={this.state.notes[i]}
+                    />
+                </React.Fragment>
                 ))}
             </div>
         )

@@ -7,17 +7,27 @@
 }
 
 .split-view {
-    display: flex;
-    flex: 1 1 auto;
-    height: calc(100% - 50px);
+    height: calc(100% - 51px);
     
     & > * {
-        flex: 1 1 auto;
+        display: inline-block;
         outline: 1px solid #ddd;
         overflow-x: hidden;
         overflow-y: scroll;
-        max-width: 50%;
+        height: 100%;
+        width: 50%;
     }
+}
+
+.toolbar {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.editor {
+    padding: 10px;
 }
 
 .present {
@@ -34,6 +44,12 @@
         padding: 5%;
         position: relative;
         height: 33vw;
+        width: 100%;
+    }
+    
+    & .notes {
+        display: none;
+        text-align: left;
         width: 100%;
     }
 }
@@ -53,17 +69,6 @@
             }
         }
     }
-}
-
-.toolbar {
-    display: flex;
-    height: 50px;
-    align-items: center;
-    padding: 5px 10px;
-}
-
-.editor {
-    padding: 10px;
 }
 
 .button {

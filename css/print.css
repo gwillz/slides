@@ -1,6 +1,7 @@
 
 @page {
-    margin: 1cm;
+    size: portrait;
+    margin: 2cm;
 }
 
 @media print {
@@ -10,29 +11,28 @@
         padding: 0 2.5%;
         
         & .slide {
-            display: block;
             margin: 2.5% 0;
             height: 40vh;
             
-            &:nth-child(2n) {
-                page-break-after: always;
+            & .md {
+                font-size: 8pt !important;
+                
+                & pre {
+                    outline: 1px solid #888;
+                }
+                
+                & pre, & pre code {
+                    color: #000;
+                    background: #fff;
+                }
             }
         }
-    }
-
-    & .md {
-        font-size: 10pt;
         
-        /*
-        & pre {
-            outline: 1px solid #555;
+        & .notes {
+            break-after: always;
+            display: block;
+            margin-top: 5%;
         }
-        
-        & pre, & pre code {
-            color: #000;
-            background: #fff;
-        }
-        */
     }
     
     .toolbar { 
@@ -42,7 +42,8 @@
         display: none;
     }
     
-    .split-view, #app {
+    #root, #app, .split-view, .present {
         display: block !important;
+        height: unset;
     }
 }

@@ -5,6 +5,7 @@ import styles from './styles'
 import store from './store';
 
 type Props = {
+    className?: string;
     content: string;
 }
 
@@ -62,7 +63,7 @@ export class Markdown extends React.Component<Props> {
         return (
             <div
                 ref={r => this.element = r}
-                className={styles("md")}
+                className={(this.props.className || '') + ' ' + styles("md")}
                 dangerouslySetInnerHTML={{
                     __html: markdown.makeHtml(this.props.content)
                 }}

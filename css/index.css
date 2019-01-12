@@ -24,7 +24,3 @@ html {
     box-sizing: inherit;
 }
 
-#app {
-    display: flex;
-    flex-direction: column;
-}
