@@ -11,7 +11,8 @@ function keyBinding(e: React.KeyboardEvent): string | null {
     if (e.key == "Enter" && e.ctrlKey) {
         return 'editor-render';
     }
-    if (e.key == "S" && e.ctrlKey) {
+    if (e.key == "s" && e.ctrlKey) {
+        e.preventDefault();
         return 'editor-save';
     }
     return getDefaultKeyBinding(e);
@@ -25,6 +26,8 @@ export class EditorView extends React.PureComponent<{}, State> {
     
     private unsubscribe: Unsubscribe;
     private timer: number;
+    private view: HTMLElement | null;
+    private editor: Editor | null;
     
     state: State = {
         draft: EditorState.createEmpty(),
@@ -39,6 +42,22 @@ export class EditorView extends React.PureComponent<{}, State> {
                     ContentState.createFromText(state.content), 
                     "insert-characters"),
             }))
+        }
+        
+        if (state.action == "FOCUS") {
+            switch (state.focus) {
+                case 'scroll-bottom':
+                    this.view && this.view.scrollTo({top: this.view.scrollHeight});
+                    break;
+                    
+                case 'scroll-top':
+                    this.view && this.view.scrollTo({top: 0});
+                    break;
+                    
+                case 'editor':
+                    this.editor && this.editor.focus();
+                    break;
+            }
         }
     }
     
@@ -88,9 +107,11 @@ export class EditorView extends React.PureComponent<{}, State> {
     
     render() {
         return (
-            <div className={styles('editor')}>
+            <div ref={r => this.view = r}
+                className={styles('editor')}>
                 <Editor
-                    placeholder="Thnx!"
+                    ref={r => this.editor = r}
+                    placeholder="Type markdown here."
                     editorState={this.state.draft}
                     onChange={this.handleChange}
                     onTab={this.insertTab}

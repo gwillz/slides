@@ -46,6 +46,7 @@ export class PresentView extends React.PureComponent<{}, State> {
             case "RENDER":
             case "LOAD":
                 this.doRender();
+                break;
         }
     }
     
@@ -64,14 +65,44 @@ export class PresentView extends React.PureComponent<{}, State> {
             case "ArrowRight":
                 this.next();
                 break;
-            
+        }
+        
+        if (!event.ctrlKey) return;
+        switch (event.key) {
             case "Enter":
-                if (event.ctrlKey) this.doRender();
+                this.doRender();
                 break;
             
             case "F1":
                 this.doRender();
                 this.goFullscreen();
+                break;
+            
+            case '1':
+                store.dispatch({
+                    type: 'FOCUS',
+                    target: 'editor',
+                })
+                break;
+                
+            case '2': 
+                this.element && this.element.focus();
+                break;
+            
+            case "Home":
+                this.element && this.element.scrollTo({top: 0});
+                store.dispatch({
+                    type: 'FOCUS',
+                    target: 'scroll-top',
+                })
+                break;
+            
+            case "End":
+                this.element && this.element.scrollTo({top: this.element.scrollHeight});
+                store.dispatch({
+                    type: 'FOCUS',
+                    target: 'scroll-bottom',
+                })
                 break;
         }
     }
