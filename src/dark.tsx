@@ -16,10 +16,13 @@ export class Dark extends React.PureComponent<Props> {
     constructor(props: Props) {
         super(props);
         const params = qs.parse(window.location.search.slice(1));
-        this.isDark = params.dark != 'undefined';
+        this.isDark = typeof params.dark !== 'undefined';
     }
     
     componentDidMount() {
+        if (this.isDark && !this.props.isDark) {
+            this.props.dispatch({type: 'DARK'});
+        }
         this.isDark = false;
     }
     
