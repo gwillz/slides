@@ -1,10 +1,9 @@
 
-import { createStore } from "redux";
+import { createStore } from 'redux';
 import * as React from 'react'
 
 export type State = {
-    action: 'LOAD' | 'EDIT' | 'SAVE' | 'FULLSCREEN' | 'RENDER' | 'DARK' | 'FOCUS' | null;
-    focus: 'editor' | 'preview' | 'scroll-bottom' | 'scroll-top' | null;
+    action: 'LOAD' | 'EDIT' | 'SAVE' | 'FULLSCREEN' | 'RENDER' | 'DARK' | null;
     dark: boolean;
     content: string;
 }
@@ -17,14 +16,10 @@ export type Action = {
     content: string;
 } | {
     type: 'SAVE' | 'RENDER' | 'FULLSCREEN' | 'DARK';
-} | {
-    type: 'FOCUS';
-    target: 'editor' | 'preview' | 'scroll-bottom' | 'scroll-top';
 }
 
 const INIT_STATE: State = {
     action: null,
-    focus: null,
     dark: false,
     content: '',
 }
@@ -44,13 +39,6 @@ function reducer(state = INIT_STATE, action: Action) {
                 action: action.type,
                 dark: !state.dark,
             }
-        case 'FOCUS': {
-            return {
-                ...state,
-                action: action.type,
-                focus: action.target,
-            }
-        }
     }
     return {
         ...state,

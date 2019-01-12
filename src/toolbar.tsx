@@ -16,12 +16,40 @@ export class Toolbar extends React.PureComponent {
     handleSave = () => {
         if (!this.link) return;
         
-        // @todo this should be elsewhere
         const {content} = store.getState();
         const url = URL.createObjectURL(new Blob([content]));
         this.link.setAttribute("href", url);
         this.link.click();
         URL.revokeObjectURL(url);
+    }
+    
+    handleFileLoad = () => {
+        if (!this.file || !this.file.files) return;
+        
+        const reader = new FileReader();
+        reader.onload = () => {
+            store.dispatch({
+                type: "LOAD",
+                content: reader.result + "",
+            })
+        }
+        reader.readAsText(this.file.files[0]);
+    }
+    
+    handleKey = (event: KeyboardEvent) => {
+        if (!event.ctrlKey) return;
+        
+        switch (event.key) {
+            case "s":
+                event.preventDefault();
+                this.handleSave();
+                break;
+                
+            case "o":
+                event.preventDefault();
+                this.handleLoad();
+                break;
+        }
     }
     
     handlePreview = () => {
@@ -48,24 +76,13 @@ export class Toolbar extends React.PureComponent {
     componentDidMount() {
         if (!this.file) return;
         this.file.addEventListener('change', this.handleFileLoad);
+        window.addEventListener("keyup", this.handleKey);
     }
     
     componentWillUnmount() {
         if (!this.file) return;
         this.file.removeEventListener('change', this.handleFileLoad);
-    }
-    
-    handleFileLoad = () => {
-        if (!this.file || !this.file.files) return;
-        
-        const reader = new FileReader();
-        reader.onload = () => {
-            store.dispatch({
-                type: "LOAD",
-                content: reader.result + "",
-            })
-        }
-        reader.readAsText(this.file.files[0]);
+        window.addEventListener("keyup", this.handleKey);
     }
     
     render() {
@@ -93,21 +110,21 @@ export class Toolbar extends React.PureComponent {
                     onClick={this.handleDark}
                 />
                 <Button 
-                    icon="play"
-                    title="Render Preview (Ctrl+Enter)"
-                    onClick={this.handlePreview}
-                />
-                <Button 
                     icon="print"
                     title="Print (with notes)"
                     onClick={this.handlePrint}
+                />
+                <Button 
+                    icon="play"
+                    title="Render Preview (Ctrl+Enter)"
+                    onClick={this.handlePreview}
                 />
                 <Button 
                     icon="chalkboard-teacher"
                     title="Present Slideshow (Ctrl-F1)"
                     onClick={this.handlePresent}
                 />
-                <input 
+                <input
                     type="file"
                     ref={r => this.file = r}
                     className={styles('hidden')}

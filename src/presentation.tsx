@@ -77,13 +77,6 @@ export class PresentView extends React.PureComponent<{}, State> {
                 this.doRender();
                 this.goFullscreen();
                 break;
-            
-            case '1':
-                store.dispatch({
-                    type: 'FOCUS',
-                    target: 'editor',
-                })
-                break;
                 
             case '2': 
                 this.element && this.element.focus();
@@ -91,18 +84,10 @@ export class PresentView extends React.PureComponent<{}, State> {
             
             case "Home":
                 this.element && this.element.scrollTo({top: 0});
-                store.dispatch({
-                    type: 'FOCUS',
-                    target: 'scroll-top',
-                })
                 break;
             
             case "End":
                 this.element && this.element.scrollTo({top: this.element.scrollHeight});
-                store.dispatch({
-                    type: 'FOCUS',
-                    target: 'scroll-bottom',
-                })
                 break;
         }
     }

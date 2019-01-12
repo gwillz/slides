@@ -1,8 +1,4 @@
 
-.hidden {
-    display: none;
-}
-
 .split-view {
     height: calc(100% - 50px);
     overflow: hidden;

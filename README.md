@@ -2,18 +2,18 @@
 
 ## TODO
 
-- implement Ctrl+S, Ctrl+O
-    - shift save/open logic elsewhere
 - persistant storage
   - store editor state
   - save/load files to localStorage
 - fix CSS hover for 'copy' button
 - add help page/dialog
 - image position (use alt='left|right|top-left|etc')
-- 'scroll to bottom' shortcut
 
 
 ## DONE
+- implement Ctrl+S, Ctrl+O
+- 'scroll to bottom' shortcut
+- focus editor/preview shortcuts
 - dark scrollbars
 - comments `[//]: # (etc)` as notes
 - printing

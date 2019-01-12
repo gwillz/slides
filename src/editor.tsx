@@ -15,6 +15,10 @@ function keyBinding(e: React.KeyboardEvent): string | null {
         e.preventDefault();
         return 'editor-save';
     }
+    if (e.key == "o" && e.ctrlKey) {
+        e.preventDefault();
+        return 'editor-load';
+    }
     return getDefaultKeyBinding(e);
 }
 
@@ -43,21 +47,22 @@ export class EditorView extends React.PureComponent<{}, State> {
                     "insert-characters"),
             }))
         }
-        
-        if (state.action == "FOCUS") {
-            switch (state.focus) {
-                case 'scroll-bottom':
-                    this.view && this.view.scrollTo({top: this.view.scrollHeight});
-                    break;
-                    
-                case 'scroll-top':
-                    this.view && this.view.scrollTo({top: 0});
-                    break;
-                    
-                case 'editor':
-                    this.editor && this.editor.focus();
-                    break;
-            }
+    }
+    
+    private handleKey = (event: KeyboardEvent) => {
+        if (!event.ctrlKey) return;
+        switch (event.key) {
+            case "1":
+                this.editor && this.editor.focus();
+                break;
+                
+            case "Home":
+                this.view && this.view.scrollTo({top: 0});
+                break;
+                
+            case "End":
+                this.view && this.view.scrollTo({top: this.view.scrollHeight});
+                break;
         }
     }
     
@@ -75,6 +80,7 @@ export class EditorView extends React.PureComponent<{}, State> {
         switch (command) {
             case 'editor-render':
             case 'editor-save':
+            case 'editor-open':
                 return 'handled';
             default:
                 return 'not-handled';
@@ -99,10 +105,12 @@ export class EditorView extends React.PureComponent<{}, State> {
     
     componentDidMount() {
         this.unsubscribe = store.subscribe(this.handleStore);
+        window.addEventListener("keyup", this.handleKey);
     }
     
     componentWillUnmount() {
         this.unsubscribe();
+        window.addEventListener("keyup", this.handleKey);
     }
     
     render() {

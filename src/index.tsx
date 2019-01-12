@@ -2,7 +2,9 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import { Unsubscribe } from 'redux';
 import * as qs from 'qs'
+
 import style from './styles';
 import store from './store'
 import './icons';
@@ -10,12 +12,11 @@ import './icons';
 import {Toolbar} from './toolbar'
 import {EditorView} from './editor'
 import {PresentView} from './presentation'
-import { Unsubscribe } from 'redux';
 
 const params = qs.parse(window.location.search.slice(1));
 
 const IS_DARK = typeof params.dark != 'undefined';
-const URL = params.url as string;
+const LOAD_URL = params.url as string;
 
 type State = {
     dark: boolean;
@@ -63,8 +64,8 @@ async function loadParams() {
         store.dispatch({type: 'DARK'});
     }
     
-    if (URL) {
-        let url = window.location.protocol + "//" + URL.replace(/^http:/, '');
+    if (LOAD_URL) {
+        let url = window.location.protocol + "//" + LOAD_URL.replace(/^http:/, '');
         
         const req = await fetch(url, {
             mode: 'cors',
