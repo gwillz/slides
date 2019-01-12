@@ -29,7 +29,7 @@ type State = {
     active: number;
 }
 
-export class PresentView extends React.PureComponent<Props, State> {
+export class PresentView extends React.Component<Props, State> {
     state: State = {
         slides: [],
         notes: [],
@@ -125,16 +125,16 @@ export class PresentView extends React.PureComponent<Props, State> {
     }
     
     componentDidUpdate(props: Props) {
-        // console.log(this.props.action)
-        if (this.props.action !== props.action) return;
+        if (props.action === this.props.action) return;
         switch (this.props.action) {
             case "FULLSCREEN":
                 this.goFullscreen();
                 // fallthrough
             case "RENDER":
+            case "OPEN":
             case "LOAD":
+                if (props.content === this.props.content) return;
                 this.doRender();
-                break;
         }
     }
     

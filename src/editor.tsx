@@ -46,6 +46,7 @@ export class EditorView extends React.PureComponent<Props, State> {
     static getDerivedStateFromProps(props: Props, state: State) {
         switch (props.action) {
             case 'LOAD':
+            case 'OPEN':
             case 'persist/REHYDRATE':
                 return {
                     content: props.content,
@@ -76,12 +77,13 @@ export class EditorView extends React.PureComponent<Props, State> {
     
     private handleChange = (draft: EditorState) => {
         const content = draft.getCurrentContent().getPlainText('');
-        if (content === this.state.content) return;
         
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-            this.props.dispatch({ type: 'EDIT', content });
-        }, 350);
+        if (content !== this.state.content) {
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => {
+                this.props.dispatch({ type: 'EDIT', content });
+            }, 350);
+        }
         
         this.setState({ 
             draft,

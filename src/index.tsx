@@ -28,7 +28,7 @@ class App extends React.Component {
                             <EditorView/>
                             <PresentView/>
                         </div>
-                        {/* <FileFolder/> */}
+                        <FileFolder/>
                     </Dark>
                 </PersistGate>
             </Provider>

@@ -36,12 +36,8 @@ export class Toolbar extends React.PureComponent {
         reader.readAsText(this.file.files[0]);
     }
     
-    handleOpen = () => {
-        store.dispatch({type: "OPEN"});
-    }
-    
-    handleSave = () => {
-        store.dispatch({type: "SAVE"});
+    handleOpenModal = () => {
+        store.dispatch({type: "MODAL_OPEN"});
     }
     
     handleKey = (event: KeyboardEvent) => {
@@ -94,20 +90,13 @@ export class Toolbar extends React.PureComponent {
     }
     
     render() {
-        // @todo ctrl+s, ctrl+o don't work atm.
         return (
             <div className={styles('toolbar')}>
-                <Button
-                    icon="folder-open"
-                    title="Load locally"
-                    onClick={this.handleOpen}
-                />
                 <Button 
                     icon="save"
-                    title="Save locally"
-                    onClick={this.handleSave}
+                    title="Save/Open files"
+                    onClick={this.handleOpenModal}
                 />
-                <div className={styles('spacer')}/>
                 <Button
                     icon="file-upload"
                     title="Load from disk"

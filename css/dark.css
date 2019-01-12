@@ -37,7 +37,7 @@
         outline-color: #444;
     }
     
-    & .files-modal {
+    & .file-modal {
         & .inner {
             background: #444;
             border: 1px solid #666;
@@ -47,6 +47,10 @@
             background: #555;
             color: #eee;
             font-size: inherit;
+        }
+        
+        & .file-select:hover {
+            background: #555;
         }
     }
     
