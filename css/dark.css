@@ -20,10 +20,38 @@
         border-color: #777;
         color: #eee;
     }
+    
+    & .toolbar {
+        border-color: #444;
+        & .spacer {
+            border-color: #444;
+        }
+    }
 
     & .present, & .editor {
         background-color: inherit;
-        scrollbar-color: #444 #232323;
+        outline-color: #444;
+    }
+    
+    & .present .slide {
+        outline-color: #444;
+    }
+    
+    & .files-modal {
+        & .inner {
+            background: #444;
+            border: 1px solid #666;
+        }
+        
+        & input {
+            background: #555;
+            color: #eee;
+            font-size: inherit;
+        }
+    }
+    
+    & .scrolling {
+        scrollbar-color: #555 #333;
     }
 }
 }

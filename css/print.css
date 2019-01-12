@@ -41,6 +41,9 @@
     .editor {
         display: none;
     }
+    .files-modal {
+        display: none;
+    }
     
     #root, #app, .split-view, .present {
         display: block !important;

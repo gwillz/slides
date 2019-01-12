@@ -13,6 +13,7 @@ import Dark from './dark'
 import Toolbar from './toolbar'
 import EditorView from './editor'
 import PresentView from './presentation'
+import FileFolder from './files'
 
 
 class App extends React.Component {
@@ -27,6 +28,7 @@ class App extends React.Component {
                             <EditorView/>
                             <PresentView/>
                         </div>
+                        {/* <FileFolder/> */}
                     </Dark>
                 </PersistGate>
             </Provider>

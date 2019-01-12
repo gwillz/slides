@@ -4,12 +4,13 @@ import { createStore } from 'redux';
 import {persistStore, persistReducer, PersistConfig, REHYDRATE} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-export type ActionTypes = 'LOAD' | 'EDIT' | 'SAVE' | 'FULLSCREEN' | 'RENDER' | 'DARK' | typeof REHYDRATE | null;
+export type ActionTypes = 'LOAD' | 'OPEN' | 'SAVE' | 'EDIT' | 'FULLSCREEN' | 'RENDER' | 'DARK' | typeof REHYDRATE | null;
 
 type State = {
     action: ActionTypes;
-    dark: boolean;
     content: string;
+    dark: boolean;
+    
 }
 
 type Action = {
@@ -19,7 +20,7 @@ type Action = {
     type: 'LOAD';
     content: string;
 } | {
-    type: 'SAVE' | 'RENDER' | 'FULLSCREEN' | 'DARK';
+    type: 'OPEN' | 'SAVE' | 'RENDER' | 'FULLSCREEN' | 'DARK';
 }
 
 const config: PersistConfig = {
@@ -29,8 +30,8 @@ const config: PersistConfig = {
 
 const INIT_STATE: State = {
     action: null,
-    dark: false,
     content: '',
+    dark: false,
 }
 
 function reducer(state = INIT_STATE, action: Action) {

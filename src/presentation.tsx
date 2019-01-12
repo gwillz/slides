@@ -153,7 +153,7 @@ export class PresentView extends React.PureComponent<Props, State> {
         return (
             <div ref={r => this.element = r}
                 onClick={this.handleClick}
-                className={styles('present')}>
+                className={styles('present scrolling')}>
                 {this.state.slides.map((slide, i) => (
                 <React.Fragment key={i}>
                     <div className={styles({

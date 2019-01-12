@@ -8,12 +8,12 @@ export class Toolbar extends React.PureComponent {
     private file: HTMLInputElement | null;
     private link: HTMLElement | null;
     
-    handleLoad = () => {
+    handleUpload = () => {
         if (!this.file) return;
         this.file.click();
     }
     
-    handleSave = () => {
+    handleDownload = () => {
         if (!this.link) return;
         
         const {content} = store.getState();
@@ -36,18 +36,26 @@ export class Toolbar extends React.PureComponent {
         reader.readAsText(this.file.files[0]);
     }
     
+    handleOpen = () => {
+        store.dispatch({type: "OPEN"});
+    }
+    
+    handleSave = () => {
+        store.dispatch({type: "SAVE"});
+    }
+    
     handleKey = (event: KeyboardEvent) => {
         if (!event.ctrlKey) return;
         
         switch (event.key) {
             case "s":
                 event.preventDefault();
-                this.handleSave();
+                this.handleDownload();
                 break;
                 
             case "o":
                 event.preventDefault();
-                this.handleLoad();
+                this.handleUpload();
                 break;
         }
     }
@@ -90,15 +98,27 @@ export class Toolbar extends React.PureComponent {
         return (
             <div className={styles('toolbar')}>
                 <Button
-                    icon="file-import"
-                    title="Load from disk (Ctrl+O)"
-                    onClick={this.handleLoad}
+                    icon="folder-open"
+                    title="Load locally"
+                    onClick={this.handleOpen}
                 />
                 <Button 
                     icon="save"
-                    title="Save to disk (Ctrl+S)"
+                    title="Save locally"
                     onClick={this.handleSave}
                 />
+                <div className={styles('spacer')}/>
+                <Button
+                    icon="file-upload"
+                    title="Load from disk"
+                    onClick={this.handleUpload}
+                />
+                <Button 
+                    icon="file-download"
+                    title="Save to disk"
+                    onClick={this.handleDownload}
+                />
+                <div className={styles('spacer')}/>
                 <Button
                     icon="broom"
                     title="Clear"
@@ -109,15 +129,16 @@ export class Toolbar extends React.PureComponent {
                     title="Dark Mode"
                     onClick={this.handleDark}
                 />
-                <Button 
-                    icon="print"
-                    title="Print (with notes)"
-                    onClick={this.handlePrint}
-                />
+                <div className={styles('spacer')}/>
                 <Button 
                     icon="play"
                     title="Render Preview (Ctrl+Enter)"
                     onClick={this.handlePreview}
+                />
+                <Button 
+                    icon="print"
+                    title="Print with notes (Ctrl+P)"
+                    onClick={this.handlePrint}
                 />
                 <Button 
                     icon="chalkboard-teacher"
