@@ -50,6 +50,7 @@
     "postcss-import": "^12.0.1",
     "postcss-modules": "^1.4.1",
     "postcss-preset-env": "^6.5.0",
+    "postcss-scrollbar": "git+https://github.com/gwillz/postcss-scrollbar.git",
     "postcss-typescript-css": "^0.2.1",
     "ts-loader": "^5.3.3",
     "tslint": "^5.12.0",

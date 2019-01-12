@@ -21,8 +21,9 @@
         color: #eee;
     }
 
-    & .present {
+    & .present, & .editor {
         background-color: inherit;
+        scrollbar-color: #444 #232323;
     }
 }
 }
