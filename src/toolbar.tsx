@@ -104,19 +104,19 @@ export class Toolbar extends React.PureComponent {
                 />
                 <Button 
                     icon="chalkboard-teacher"
-                    title="Present Slideshow (F1)"
+                    title="Present Slideshow (Ctrl-F1)"
                     onClick={this.handlePresent}
                 />
                 <input 
                     type="file"
                     ref={r => this.file = r}
-                    style={{display: 'none'}}
+                    className={styles('hidden')}
                 />
                 <a
                     href="data:"
                     download="presentation.md"
                     ref={r => this.link = r}
-                    style={{display: 'none'}}
+                    className={styles('hidden')}
                 />
             </div>
         )

@@ -45,5 +45,6 @@
     #root, #app, .split-view, .present {
         display: block !important;
         height: unset;
+        overflow: visible;
     }
 }

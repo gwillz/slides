@@ -1,13 +1,11 @@
 
-
-.DraftEditor-root {
-    font-family: monospace;
-    font-size: 14px;
-    height: 100%;
+.hidden {
+    display: none;
 }
 
 .split-view {
-    height: calc(100% - 51px);
+    height: calc(100% - 50px);
+    overflow: hidden;
     
     & > * {
         display: inline-block;
@@ -20,19 +18,28 @@
 }
 
 .toolbar {
-    display: flex;
+    display: block;
     height: 50px;
-    align-items: center;
     padding: 5px 10px;
+    border-bottom: 1px solid #ddd;
+    
+     & > * {
+         display: inline-block;
+     }
 }
 
 .editor {
     padding: 10px;
 }
 
+.DraftEditor-root {
+    font-family: monospace;
+    font-size: 14px;
+    height: 100%;
+}
+
 .present {
     background: white;
-    position: relative;
     
     & .slide {
         display: flex;
@@ -42,7 +49,6 @@
         outline: 1px solid #ddd;
         overflow: hidden;
         padding: 5%;
-        position: relative;
         height: 33vw;
         width: 100%;
     }
@@ -57,6 +63,12 @@
 @media all and (display-mode: fullscreen) {
     .present {
         overflow-y: hidden;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
         
         & .slide {
             outline: none;
@@ -68,6 +80,13 @@
                 display: flex;
             }
         }
+    }
+    
+    .toolbar { 
+        display: none;
+    }
+    .editor {
+        display: none;
     }
 }
 
