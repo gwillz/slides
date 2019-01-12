@@ -1,9 +1,9 @@
 
 import * as React from 'react';
 import styles from './styles';
-import store from './store';
+import {ActionTypes, Store} from './store';
 import { Markdown } from './markdown';
-import { Unsubscribe } from 'redux';
+import { connect, DispatchProp } from 'react-redux';
 
 const FILTER_NOTES = /\s*\[\/\/\]:\s*#\s*\(([^\n]+)\)/g;
 
@@ -18,6 +18,10 @@ function recurseRegex(expr: RegExp, src: string, index = 0) {
     return result;
 }
 
+type Props = DispatchProp & {
+    action: ActionTypes;
+    content: string;
+}
 
 type State = {
     slides: string[];
@@ -25,7 +29,7 @@ type State = {
     active: number;
 }
 
-export class PresentView extends React.PureComponent<{}, State> {
+export class PresentView extends React.PureComponent<Props, State> {
     state: State = {
         slides: [],
         notes: [],
@@ -34,21 +38,6 @@ export class PresentView extends React.PureComponent<{}, State> {
     
     private lastSelection = "";
     private element: HTMLElement | null;
-    private unsubscribe: Unsubscribe;
-    
-    private handleStore = () => {
-        const state = store.getState();
-        
-        switch (state.action) {
-            case "FULLSCREEN":
-                this.goFullscreen();
-                // fallthrough
-            case "RENDER":
-            case "LOAD":
-                this.doRender();
-                break;
-        }
-    }
     
     private handleKey = (event: KeyboardEvent) => {
         switch (event.key) {
@@ -103,19 +92,8 @@ export class PresentView extends React.PureComponent<{}, State> {
         }
     }
     
-    componentDidMount() {
-        this.unsubscribe = store.subscribe(this.handleStore);
-        window.addEventListener("keyup", this.handleKey);
-    }
-    
-    componentWillUnmount() {
-        this.unsubscribe();
-        window.addEventListener("keyup", this.handleKey);
-    }
-    
     public doRender() {
-        const state = store.getState();
-        const slides = state.content.split(/\n\s*---+\s*\n/);
+        const slides = this.props.content.split(/\n\s*---+\s*\n/);
         const notes = slides.map(slide => (
             recurseRegex(FILTER_NOTES, slide, 1)
             .map(note => " + " + note)
@@ -146,6 +124,31 @@ export class PresentView extends React.PureComponent<{}, State> {
         }))
     }
     
+    componentDidUpdate(props: Props) {
+        // console.log(this.props.action)
+        if (this.props.action !== props.action) return;
+        switch (this.props.action) {
+            case "FULLSCREEN":
+                this.goFullscreen();
+                // fallthrough
+            case "RENDER":
+            case "LOAD":
+                this.doRender();
+                break;
+        }
+    }
+    
+    componentDidMount() {
+        window.addEventListener("keyup", this.handleKey);
+        if (this.props.content) {
+            this.doRender();
+            }
+    }
+    
+    componentWillUnmount() {
+        window.addEventListener("keyup", this.handleKey);
+    }
+    
     render() {
         return (
             <div ref={r => this.element = r}
@@ -170,3 +173,9 @@ export class PresentView extends React.PureComponent<{}, State> {
     }
 }
 
+const map = (store: Store) => ({
+    action: store.action,
+    content: store.content,
+})
+
+export default connect(map)(PresentView);

@@ -1,71 +1,44 @@
 
 import * as React from 'react';
 import { render } from 'react-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
-import { Unsubscribe } from 'redux';
 import * as qs from 'qs'
 
 import style from './styles';
-import store from './store'
+import { store, persistor } from './store'
 import './icons';
 
-import {Toolbar} from './toolbar'
-import {EditorView} from './editor'
-import {PresentView} from './presentation'
+import Dark from './dark'
+import Toolbar from './toolbar'
+import EditorView from './editor'
+import PresentView from './presentation'
 
-const params = qs.parse(window.location.search.slice(1));
 
-const IS_DARK = typeof params.dark != 'undefined';
-const LOAD_URL = params.url as string;
-
-type State = {
-    dark: boolean;
-}
-
-class App extends React.Component<{}, State> {
-    state: State = {
-        dark: IS_DARK,
-    }
-    
-    private unsubscribe: Unsubscribe;
-    
-    componentDidMount() {
-        this.unsubscribe = store.subscribe(this.handleStore);
-    }
-    
-    private handleStore = () => {
-        let state = store.getState();
-        if (state.action == "DARK") {
-            this.setState({
-                dark: state.dark,
-            })
-        }
-    }
+class App extends React.Component {
     
     render() {
         return (
             <Provider store={store}>
-                <div id={style('app')} className={style({
-                    dark: this.state.dark,
-                })}>
-                    <Toolbar/>
-                    <div className={style("split-view")}>
-                        <EditorView/>
-                        <PresentView/>
-                    </div>
-                </div>
+                <PersistGate loading={null} persistor={persistor}>
+                    <Dark id={style('app')}>
+                        <Toolbar/>
+                        <div className={style("split-view")}>
+                            <EditorView/>
+                            <PresentView/>
+                        </div>
+                    </Dark>
+                </PersistGate>
             </Provider>
         )
     }
 }
 
 async function loadParams() {
-    if (IS_DARK) {
-        store.dispatch({type: 'DARK'});
-    }
-    
-    if (LOAD_URL) {
-        let url = window.location.protocol + "//" + LOAD_URL.replace(/^http:/, '');
+    const params = qs.parse(window.location.search.slice(1));
+    let url = params.url as string;
+    if (url) {
+        url = window.location.protocol + "//" + url.replace(/^http:/, '');
         
         const req = await fetch(url, {
             mode: 'cors',

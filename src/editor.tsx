@@ -1,9 +1,9 @@
 
 import * as React from 'react';
-import { Unsubscribe } from 'redux';
 import { EditorState, Editor, ContentState, getDefaultKeyBinding, Modifier } from 'draft-js';
 import styles from './styles';
-import store from './store';
+import { connect, DispatchProp } from 'react-redux';
+import { Store, ActionTypes } from './store';
 
 const TAB = "    ";
 
@@ -22,13 +22,17 @@ function keyBinding(e: React.KeyboardEvent): string | null {
     return getDefaultKeyBinding(e);
 }
 
+type Props = DispatchProp & {
+    action: ActionTypes;
+    content: string;
+}
+
 type State = {
     draft: EditorState;
 }
 
-export class EditorView extends React.PureComponent<{}, State> {
+export class EditorView extends React.PureComponent<Props, State> {
     
-    private unsubscribe: Unsubscribe;
     private timer: number;
     private view: HTMLElement | null;
     private editor: Editor | null;
@@ -37,16 +41,17 @@ export class EditorView extends React.PureComponent<{}, State> {
         draft: EditorState.createEmpty(),
     }
     
-    // @todo I hate this. Why is state management such a bitch?
-    private handleStore = () => {
-        const state = store.getState();
-        if (state.action == "LOAD") {
-            this.setState(({draft}) => ({
-                draft: EditorState.push(draft,
-                    ContentState.createFromText(state.content), 
-                    "insert-characters"),
-            }))
+    static getDerivedStateFromProps(props: Props, state: State) {
+        switch (props.action) {
+            case 'LOAD':
+            case 'persist/REHYDRATE':
+                return {
+                    draft: EditorState.push(state.draft,
+                        ContentState.createFromText(props.content), 
+                        "insert-characters"),
+                }
         }
+        return null;
     }
     
     private handleKey = (event: KeyboardEvent) => {
@@ -72,7 +77,7 @@ export class EditorView extends React.PureComponent<{}, State> {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
             const content = draft.getCurrentContent().getPlainText('');
-            store.dispatch({ type: 'EDIT', content });
+            this.props.dispatch({ type: 'EDIT', content });
         }, 350);
     }
     
@@ -104,12 +109,10 @@ export class EditorView extends React.PureComponent<{}, State> {
     }
     
     componentDidMount() {
-        this.unsubscribe = store.subscribe(this.handleStore);
         window.addEventListener("keyup", this.handleKey);
     }
     
     componentWillUnmount() {
-        this.unsubscribe();
         window.addEventListener("keyup", this.handleKey);
     }
     
@@ -130,3 +133,10 @@ export class EditorView extends React.PureComponent<{}, State> {
         )
     }
 }
+
+const map = (store: Store) => ({
+    action: store.action,
+    content: store.content,
+})
+
+export default connect(map)(EditorView);

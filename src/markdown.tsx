@@ -2,7 +2,7 @@
 import * as React from 'react'
 import * as showdown from 'showdown'
 import styles from './styles'
-import store from './store';
+import {store} from './store'
 
 type Props = {
     className?: string;

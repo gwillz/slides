@@ -2,7 +2,7 @@
 import * as React from 'react';
 import styles from './styles';
 import {Button} from './button';
-import store from './store';
+import {store} from './store'
 
 export class Toolbar extends React.PureComponent {
     private file: HTMLInputElement | null;
@@ -139,3 +139,5 @@ export class Toolbar extends React.PureComponent {
         )
     }
 }
+
+export default Toolbar;

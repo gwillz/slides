@@ -1,14 +1,18 @@
 
-import { createStore } from 'redux';
 import * as React from 'react'
+import { createStore } from 'redux';
+import {persistStore, persistReducer, PersistConfig, REHYDRATE} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
-export type State = {
-    action: 'LOAD' | 'EDIT' | 'SAVE' | 'FULLSCREEN' | 'RENDER' | 'DARK' | null;
+export type ActionTypes = 'LOAD' | 'EDIT' | 'SAVE' | 'FULLSCREEN' | 'RENDER' | 'DARK' | typeof REHYDRATE | null;
+
+type State = {
+    action: ActionTypes;
     dark: boolean;
     content: string;
 }
 
-export type Action = {
+type Action = {
     type: 'EDIT';
     content: string;
 } | {
@@ -16,6 +20,11 @@ export type Action = {
     content: string;
 } | {
     type: 'SAVE' | 'RENDER' | 'FULLSCREEN' | 'DARK';
+}
+
+const config: PersistConfig = {
+    key: 'root',
+    storage,
 }
 
 const INIT_STATE: State = {
@@ -46,13 +55,11 @@ function reducer(state = INIT_STATE, action: Action) {
     }
 }
 
-const store = createStore(
-    reducer,
-    // @ts-ignore
+export const store = createStore(
+    persistReducer(config, reducer),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
-export default store;
 
-export type Store = typeof store;
-export const context = React.createContext(store);
-export const {Provider, Consumer} = context;
+export const persistor = persistStore(store);
+
+export type Store = State;
