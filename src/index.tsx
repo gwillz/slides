@@ -9,6 +9,7 @@ import style from './styles';
 import { store, persistor } from './store'
 import './icons';
 
+import Head from './head'
 import Dark from './dark'
 import Toolbar from './toolbar'
 import EditorView from './editor'
@@ -23,6 +24,7 @@ class App extends React.Component {
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
                     <Dark id={style('app')}>
+                        <Head/>
                         <Toolbar/>
                         <div className={style("split-view")}>
                             <EditorView/>

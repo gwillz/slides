@@ -4,7 +4,6 @@
 - fix CSS hover for 'copy' button
 - add help page/dialog
 - image position (use alt='left|right|top-left|etc')
-- react-helmet (for <title>)
 - file modal
     - delete button
     - better keyboard shortcuts
@@ -12,6 +11,7 @@
 - implement Ctrl+O
 
 ## DONE
+- react-helmet (for <title>)
 - file modal
     - move upload to modal
     - load files into local store
