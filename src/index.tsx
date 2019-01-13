@@ -14,7 +14,8 @@ import Dark from './dark'
 import Toolbar from './toolbar'
 import EditorView from './editor'
 import PresentView from './presentation'
-import FileFolder from './files'
+import FileModal from './files'
+import HelpModal from './help'
 
 
 class App extends React.Component {
@@ -30,7 +31,8 @@ class App extends React.Component {
                             <EditorView/>
                             <PresentView/>
                         </div>
-                        <FileFolder/>
+                        <FileModal/>
+                        <HelpModal/>
                     </Dark>
                 </PersistGate>
             </Provider>

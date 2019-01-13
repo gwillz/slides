@@ -10,4 +10,5 @@ library.add(
     solid.faFolderOpen,
     solid.faPlay,
     solid.faPrint,
+    solid.faQuestion,
 )

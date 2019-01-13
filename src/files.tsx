@@ -15,7 +15,7 @@ type State = {
     filename: string;
 }
 
-export class FileFolder extends React.Component<Props, State> {
+export class FileModal extends React.Component<Props, State> {
     state: State = {
         filename: '',
     }
@@ -102,7 +102,10 @@ export class FileFolder extends React.Component<Props, State> {
         }
         if (event.ctrlKey && event.key === "o") {
             event.preventDefault();
-            this.props.dispatch({ type: "MODAL_OPEN" });
+            this.props.dispatch({
+                type: "MODAL_OPEN",
+                modal: 'files',
+            });
             return;
         }
     }
@@ -123,7 +126,7 @@ export class FileFolder extends React.Component<Props, State> {
     render() {
         return (
             <div className={styles({
-                'file-modal': true,
+                'modal': true,
                 'active': this.props.isOpen,
             })}>
                 <div className={styles('inner')}>
@@ -191,9 +194,9 @@ export class FileFolder extends React.Component<Props, State> {
 }
 
 const map = (state: Store) => ({
-    isOpen: state.modalOpen,
+    isOpen: state.modal === 'files',
     filename: state.currentFile,
     fileslist: Object.keys(state.files),
 })
 
-export default connect(map)(FileFolder);
+export default connect(map)(FileModal);

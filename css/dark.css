@@ -23,7 +23,8 @@
     
     & .toolbar {
         border-color: #444;
-        & .spacer {
+        
+        & .toolbar-line {
             border-color: #444;
         }
     }
@@ -37,7 +38,7 @@
         outline-color: #444;
     }
     
-    & .file-modal {
+    & .modal {
         & .inner {
             background: #444;
             border: 1px solid #666;

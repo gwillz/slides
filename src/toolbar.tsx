@@ -24,7 +24,10 @@ export class Toolbar extends React.PureComponent<Props> {
     }
     
     handleOpenModal = () => {
-        this.props.dispatch({type: "MODAL_OPEN"});
+        this.props.dispatch({
+            type: "MODAL_OPEN",
+            modal: 'files',
+        });
     }
     
     handlePreview = () => {
@@ -48,11 +51,18 @@ export class Toolbar extends React.PureComponent<Props> {
         setTimeout(() => window.print(), 250);
     }
     
+    handleHelp = () => {
+        this.props.dispatch({
+            type: "MODAL_OPEN",
+            modal: 'help',
+        });
+    }
+    
     render() {
         const filename = this.props.filename || 'presentation';
         
         return (
-            <div className={styles('toolbar')}>
+            <div className={styles('toolbar flex-nav')}>
                 <Button 
                     icon="folder-open"
                     title="Save/Open files"
@@ -63,7 +73,7 @@ export class Toolbar extends React.PureComponent<Props> {
                     title="Export/Download"
                     onClick={this.handleDownload}
                 />
-                <div className={styles('spacer')}/>
+                <div className={styles('toolbar-line')}/>
                 <Button
                     icon="broom"
                     title="Clear"
@@ -74,7 +84,7 @@ export class Toolbar extends React.PureComponent<Props> {
                     title="Dark Mode"
                     onClick={this.handleDark}
                 />
-                <div className={styles('spacer')}/>
+                <div className={styles('toolbar-line')}/>
                 <Button 
                     icon="play"
                     title="Render Preview (Ctrl+Enter)"
@@ -89,6 +99,12 @@ export class Toolbar extends React.PureComponent<Props> {
                     icon="chalkboard-teacher"
                     title="Present Slideshow (Ctrl-F1)"
                     onClick={this.handlePresent}
+                />
+                <div className={styles('toolbar-line')}/>
+                <Button
+                    icon="question"
+                    title="About"
+                    onClick={this.handleHelp}
                 />
                 <a
                     href="data:"

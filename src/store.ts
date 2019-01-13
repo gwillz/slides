@@ -5,12 +5,13 @@ import storage from 'redux-persist/lib/storage'
 import files from './files';
 
 export type ActionTypes = 'ACK' | 'LOAD' | 'EDIT' | 'OPEN' | 'FULLSCREEN' | 'RENDER' | 'DARK' | typeof REHYDRATE | null;
+export type ModalTypes = 'files' | 'help' | null;
 
 type State = {
     action: ActionTypes;
     content: string;
     dark: boolean;
-    modalOpen: boolean;
+    modal: ModalTypes;
     currentFile?: string;
     files: {[k: string]: string};
 }
@@ -32,22 +33,23 @@ type Action = {
     type: 'DELETE';
     filename: string;
 } | {
-    type: 'MODAL_OPEN' | 'MODAL_CLOSE';
+    type: 'MODAL_OPEN';
+    modal: ModalTypes;
 } | {
-    type: 'RENDER' | 'FULLSCREEN' | 'DARK' | 'ACK';
+    type: 'MODAL_CLOSE' | 'RENDER' | 'FULLSCREEN' | 'DARK' | 'ACK';
 }
 
 const config: PersistConfig = {
     key: 'root',
     storage,
-    blacklist: ['action', 'modalOpen', 'content', 'currentFile'],
+    blacklist: ['action', 'modal', 'content', 'currentFile'],
 }
 
 const INIT_STATE: State = {
     action: null,
     content: '',
     dark: false,
-    modalOpen: false,
+    modal: null,
     files: {},
 }
 
@@ -77,7 +79,7 @@ function reducer(state = INIT_STATE, action: Action) {
                 action: action.type,
                 currentFile: action.filename,
                 content: state.files[action.filename] || '',
-                modalOpen: false,
+                modal: null,
             }
         case "SAVE":
             if (!action.filename) return state;
@@ -88,7 +90,7 @@ function reducer(state = INIT_STATE, action: Action) {
                     [action.filename]: state.content,
                 },
                 currentFile: action.filename,
-                modalOpen: false,
+                modal: null,
             }
         case "EDIT":
             return {
@@ -109,12 +111,12 @@ function reducer(state = INIT_STATE, action: Action) {
         case "MODAL_OPEN":
             return {
                 ...state,
-                modalOpen: true,
+                modal: action.modal,
             }
         case "MODAL_CLOSE":
             return {
                 ...state,
-                modalOpen: false,
+                modal: null,
             }
     }
     return {
