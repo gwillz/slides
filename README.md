@@ -10,6 +10,8 @@
 - implement Ctrl+O
 
 ## DONE
+- fix fullscreen button
+- fix scrollbar in fullscreen
 - react-helmet (for <title>)
 - file modal
     - delete button

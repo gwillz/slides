@@ -61,7 +61,6 @@
 
 @media all and (display-mode: fullscreen) {
     .present {
-        overflow-y: hidden;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -82,10 +81,13 @@
     }
     
     .toolbar { 
-        display: none;
+        display: none !important;
     }
     .editor {
-        display: none;
+        display: none !important;
+    }
+    .scrolling {
+        overflow: hidden !important;
     }
 }
 

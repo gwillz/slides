@@ -58,13 +58,11 @@ export class PresentView extends React.Component<Props, State> {
         
         if (!event.ctrlKey) return;
         switch (event.key) {
+            case "F1":
+                this.goFullscreen();
+                // fallthrough
             case "Enter":
                 this.doRender();
-                break;
-            
-            case "F1":
-                this.doRender();
-                this.goFullscreen();
                 break;
                 
             case '2': 
@@ -131,6 +129,8 @@ export class PresentView extends React.Component<Props, State> {
                 this.goFullscreen();
                 // fallthrough
             case "RENDER":
+                this.props.dispatch({type: 'ACK'});
+                // fallthrough
             case "OPEN":
             case "LOAD":
                 if (props.content === this.props.content) return;
