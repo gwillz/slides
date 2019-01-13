@@ -106,6 +106,7 @@ export class PresentView extends React.Component<Props, State> {
             active: 0,
         }, () => {
             if (!this.element) return;
+            this.element.focus();
             this.element.requestFullscreen();
         })
     }

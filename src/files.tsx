@@ -56,17 +56,27 @@ export class FileFolder extends React.Component<Props, State> {
     }
     
     handleSelect(filename: string) {
-        return () => this.setState({ filename });
+        return () => {
+            if (this.state.filename === filename) {
+                this.handleLoad();
+            }
+            else {
+                this.setState({ filename });
+            }
+        }
     }
     
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // if (event.key === "Enter") {
-        //     this.handleSave();
-        //     return;
-        // }
         this.setState({
             filename: event.currentTarget.value,
          });
+    }
+    
+    handleInputKey = (event: React.KeyboardEvent) => {
+        if (event.key === "Enter") {
+            this.handleSave();
+            return;
+        }
     }
     
     handleFileLoad = () => {
@@ -88,17 +98,24 @@ export class FileFolder extends React.Component<Props, State> {
     handleKeys = (event: KeyboardEvent) => {
         if (this.props.isOpen && event.key === "Escape") {
             this.props.dispatch({ type: "MODAL_CLOSE" });
+            return;
+        }
+        if (event.ctrlKey && event.key === "o") {
+            event.preventDefault();
+            this.props.dispatch({ type: "MODAL_OPEN" });
+            return;
         }
     }
     
     componentDidMount() {
-        window.addEventListener('keyup', this.handleKeys);
+        // Browser ctrl+o actions cannot be prevented() on keyup.
+        window.addEventListener('keydown', this.handleKeys);
         if (this.file)
             this.file.addEventListener('change', this.handleFileLoad);
     }
     
     componentWillUnmount() {
-        window.removeEventListener('keyup', this.handleKeys);
+        window.removeEventListener('keydown', this.handleKeys);
         if (this.file)
             this.file.removeEventListener('change', this.handleFileLoad);
     }
@@ -129,6 +146,7 @@ export class FileFolder extends React.Component<Props, State> {
                             placeholder="Filename..."
                             value={this.state.filename}
                             onChange={this.handleInput}
+                            onKeyUp={this.handleInputKey}
                         />
                         <div className={styles('flex-nav')}>
                             <button
