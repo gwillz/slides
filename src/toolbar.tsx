@@ -54,7 +54,7 @@ export class Toolbar extends React.PureComponent<Props> {
         return (
             <div className={styles('toolbar')}>
                 <Button 
-                    icon="save"
+                    icon="folder-open"
                     title="Save/Open files"
                     onClick={this.handleOpenModal}
                 />

@@ -101,8 +101,11 @@ function reducer(state = INIT_STATE, action: Action) {
             }
         case "DELETE":
             delete state.files[action.filename];
-            return state;
-        
+            return {
+                ...state,
+                currentFile: undefined,
+                files: {...state.files},
+            }
         case "MODAL_OPEN":
             return {
                 ...state,

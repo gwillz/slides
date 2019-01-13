@@ -31,6 +31,7 @@ export class FileFolder extends React.Component<Props, State> {
             type: "OPEN",
             filename: this.state.filename,
         });
+        this.setState({ filename: '' });
     }
     
     handleSave = () => {
@@ -38,9 +39,15 @@ export class FileFolder extends React.Component<Props, State> {
             type: 'SAVE',
             filename: this.state.filename,
         });
-        this.setState({
-            filename: '',
+        this.setState({ filename: '' });
+    }
+    
+    handleDelete = () => {
+        this.props.dispatch({
+            type: "DELETE",
+            filename: this.state.filename,
         })
+        this.setState({ filename: '' });
     }
     
     handleImport = () => {
@@ -135,9 +142,15 @@ export class FileFolder extends React.Component<Props, State> {
                                 Upload
                             </button>
                             <button
-                                onClick={this.handleLoad}
+                                onClick={this.handleDelete}
                                 disabled={!this.state.filename}
                                 className={styles('button', 'pull')}>
+                                Delete
+                            </button>
+                            <button
+                                onClick={this.handleLoad}
+                                disabled={!this.state.filename}
+                                className={styles('button')}>
                                 Open
                             </button>
                             <button

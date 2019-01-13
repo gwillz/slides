@@ -5,7 +5,6 @@
 - add help page/dialog
 - image position (use alt='left|right|top-left|etc')
 - file modal
-    - delete button
     - better keyboard shortcuts
 - rename 'file-modal' to 'modal'
 - implement Ctrl+O
@@ -13,6 +12,7 @@
 ## DONE
 - react-helmet (for <title>)
 - file modal
+    - delete button
     - move upload to modal
     - load files into local store
     - rename download to 'export'
