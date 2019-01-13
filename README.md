@@ -6,17 +6,19 @@
 - image position (use alt='left|right|top-left|etc')
 - react-helmet (for <title>)
 - file modal
-    - move upload to modal
-    - load files into local store
     - delete button
-    - rename download to 'export'
+    - better keyboard shortcuts
 - rename 'file-modal' to 'modal'
+- implement Ctrl+O
 
 ## DONE
+- file modal
+    - move upload to modal
+    - load files into local store
+    - rename download to 'export'
 - persistant storage
   - store editor state
   - save/load files to localStorage
-- implement Ctrl+S, Ctrl+O
 - 'scroll to bottom' shortcut
 - focus editor/preview shortcuts
 - dark scrollbars

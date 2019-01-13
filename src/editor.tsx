@@ -48,6 +48,7 @@ export class EditorView extends React.PureComponent<Props, State> {
             case 'LOAD':
             case 'OPEN':
             case 'persist/REHYDRATE':
+                props.dispatch({type: 'ACK'});
                 return {
                     content: props.content,
                     draft: EditorState.push(state.draft,

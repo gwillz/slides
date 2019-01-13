@@ -2,8 +2,9 @@
 import { createStore } from 'redux';
 import {persistStore, persistReducer, PersistConfig, REHYDRATE} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import files from './files';
 
-export type ActionTypes = 'LOAD' | 'EDIT' | 'OPEN' | 'FULLSCREEN' | 'RENDER' | 'DARK' | typeof REHYDRATE | null;
+export type ActionTypes = 'ACK' | 'LOAD' | 'EDIT' | 'OPEN' | 'FULLSCREEN' | 'RENDER' | 'DARK' | typeof REHYDRATE | null;
 
 type State = {
     action: ActionTypes;
@@ -19,11 +20,11 @@ type Action = {
     content: string;
 } | {
     type: 'LOAD';
+    filename?: string;
     content: string;
 } | {
     type: 'OPEN';
     filename: string;
-    content: string;
 } | {
     type: 'SAVE';
     filename: string;
@@ -33,7 +34,7 @@ type Action = {
 } | {
     type: 'MODAL_OPEN' | 'MODAL_CLOSE';
 } | {
-    type: 'RENDER' | 'FULLSCREEN' | 'DARK';
+    type: 'RENDER' | 'FULLSCREEN' | 'DARK' | 'ACK';
 }
 
 const config: PersistConfig = {
@@ -56,7 +57,13 @@ function reducer(state = INIT_STATE, action: Action) {
             return {
                 ...state,
                 action: action.type,
+                currentFile: action.filename,
                 content: action.content,
+                files: action.filename ? {
+                    ...state.files,
+                    [action.filename]: action.content,
+                } : state.files,
+                modalOpen: false,
             }
         case "DARK":
             return {
@@ -68,7 +75,7 @@ function reducer(state = INIT_STATE, action: Action) {
             return {
                 ...state,
                 action: action.type,
-                filename: action.filename,
+                currentFile: action.filename,
                 content: state.files[action.filename] || '',
                 modalOpen: false,
             }
@@ -84,18 +91,13 @@ function reducer(state = INIT_STATE, action: Action) {
                 modalOpen: false,
             }
         case "EDIT":
-            if (!state.currentFile) return {
-                ...state,
-                content: action.content,
-            }
-            // else
             return {
                 ...state,
                 content: action.content,
-                files: {
+                files: state.currentFile ? {
                     ...state.files,
-                    [state.currentFile]: action.content,
-                }
+                    [state.currentFile]: action.content
+                } : state.files,
             }
         case "DELETE":
             delete state.files[action.filename];

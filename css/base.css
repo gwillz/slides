@@ -152,6 +152,7 @@
     
     & .file-select {
         cursor: pointer;
+        padding: 5px;
         
         &:hover {
             background: #eee;

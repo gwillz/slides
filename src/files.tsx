@@ -20,6 +20,8 @@ export class FileFolder extends React.Component<Props, State> {
         filename: '',
     }
     
+    private file: HTMLInputElement | null;
+    
     handleClose = () => {
         this.props.dispatch({ type: "MODAL_CLOSE" });
     }
@@ -41,6 +43,11 @@ export class FileFolder extends React.Component<Props, State> {
         })
     }
     
+    handleImport = () => {
+        if (!this.file) return;
+        this.file.click();
+    }
+    
     handleSelect(filename: string) {
         return () => this.setState({ filename });
     }
@@ -55,6 +62,22 @@ export class FileFolder extends React.Component<Props, State> {
          });
     }
     
+    handleFileLoad = () => {
+        if (!this.file || !this.file.files) return;
+        
+        const file = this.file.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = () => {
+            this.props.dispatch({
+                type: "LOAD",
+                content: reader.result + "",
+                filename: file.name.replace(/(\.\w+)$/, ''),
+            })
+        }
+        reader.readAsText(file);
+    }
+    
     handleKeys = (event: KeyboardEvent) => {
         if (this.props.isOpen && event.key === "Escape") {
             this.props.dispatch({ type: "MODAL_CLOSE" });
@@ -63,10 +86,14 @@ export class FileFolder extends React.Component<Props, State> {
     
     componentDidMount() {
         window.addEventListener('keyup', this.handleKeys);
+        if (this.file)
+            this.file.addEventListener('change', this.handleFileLoad);
     }
     
     componentWillUnmount() {
         window.removeEventListener('keyup', this.handleKeys);
+        if (this.file)
+            this.file.removeEventListener('change', this.handleFileLoad);
     }
     
     render() {
@@ -103,18 +130,30 @@ export class FileFolder extends React.Component<Props, State> {
                                 Close
                             </button>
                             <button
+                                onClick={this.handleImport}
+                                className={styles('button')}>
+                                Upload
+                            </button>
+                            <button
                                 onClick={this.handleLoad}
+                                disabled={!this.state.filename}
                                 className={styles('button', 'pull')}>
-                                Load
+                                Open
                             </button>
                             <button
                                 onClick={this.handleSave}
+                                disabled={!this.state.filename}
                                 className={styles('button')}>
                                 Save
                             </button>
                         </div>
                     </div>
                 </div>
+                <input
+                    type="file"
+                    ref={r => this.file = r}
+                    className={styles('hidden')}
+                />
             </div>
         )
     }

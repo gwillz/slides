@@ -2,94 +2,55 @@
 import * as React from 'react';
 import styles from './styles';
 import {Button} from './button';
-import {store} from './store'
+import {Store} from './store'
+import { connect, DispatchProp } from 'react-redux';
 
-export class Toolbar extends React.PureComponent {
-    private file: HTMLInputElement | null;
+type Props = DispatchProp & {
+    content: string;
+    filename?: string;
+}
+
+export class Toolbar extends React.PureComponent<Props> {
     private link: HTMLElement | null;
-    
-    handleUpload = () => {
-        if (!this.file) return;
-        this.file.click();
-    }
     
     handleDownload = () => {
         if (!this.link) return;
         
-        const {content} = store.getState();
+        const {content} = this.props;
         const url = URL.createObjectURL(new Blob([content]));
         this.link.setAttribute("href", url);
         this.link.click();
         URL.revokeObjectURL(url);
     }
     
-    handleFileLoad = () => {
-        if (!this.file || !this.file.files) return;
-        
-        const reader = new FileReader();
-        reader.onload = () => {
-            store.dispatch({
-                type: "LOAD",
-                content: reader.result + "",
-            })
-        }
-        reader.readAsText(this.file.files[0]);
-    }
-    
     handleOpenModal = () => {
-        store.dispatch({type: "MODAL_OPEN"});
-    }
-    
-    handleKey = (event: KeyboardEvent) => {
-        if (!event.ctrlKey) return;
-        
-        switch (event.key) {
-            case "s":
-                event.preventDefault();
-                this.handleDownload();
-                break;
-                
-            case "o":
-                event.preventDefault();
-                this.handleUpload();
-                break;
-        }
+        this.props.dispatch({type: "MODAL_OPEN"});
     }
     
     handlePreview = () => {
-        store.dispatch({type: "RENDER"});
+        this.props.dispatch({type: "RENDER"});
     }
     
     handlePresent = () => {
-        store.dispatch({type: "FULLSCREEN"});
+        this.props.dispatch({type: "FULLSCREEN"});
     }
     
     handleClear = () => {
-        store.dispatch({type: "LOAD", content: ""});
+        this.props.dispatch({type: "LOAD", content: ""});
     }
     
     handleDark = () => {
-        store.dispatch({type: "DARK"});
+        this.props.dispatch({type: "DARK"});
     }
     
     handlePrint = () => {
-        store.dispatch({type: "RENDER"});
+        this.props.dispatch({type: "RENDER"});
         setTimeout(() => window.print(), 250);
     }
     
-    componentDidMount() {
-        if (!this.file) return;
-        this.file.addEventListener('change', this.handleFileLoad);
-        window.addEventListener("keyup", this.handleKey);
-    }
-    
-    componentWillUnmount() {
-        if (!this.file) return;
-        this.file.removeEventListener('change', this.handleFileLoad);
-        window.addEventListener("keyup", this.handleKey);
-    }
-    
     render() {
+        const filename = this.props.filename || 'presentation';
+        
         return (
             <div className={styles('toolbar')}>
                 <Button 
@@ -97,14 +58,9 @@ export class Toolbar extends React.PureComponent {
                     title="Save/Open files"
                     onClick={this.handleOpenModal}
                 />
-                <Button
-                    icon="file-upload"
-                    title="Load from disk"
-                    onClick={this.handleUpload}
-                />
                 <Button 
                     icon="file-download"
-                    title="Save to disk"
+                    title="Export/Download"
                     onClick={this.handleDownload}
                 />
                 <div className={styles('spacer')}/>
@@ -134,14 +90,9 @@ export class Toolbar extends React.PureComponent {
                     title="Present Slideshow (Ctrl-F1)"
                     onClick={this.handlePresent}
                 />
-                <input
-                    type="file"
-                    ref={r => this.file = r}
-                    className={styles('hidden')}
-                />
                 <a
                     href="data:"
-                    download="presentation.md"
+                    download={filename + ".md"}
                     ref={r => this.link = r}
                     className={styles('hidden')}
                 />
@@ -150,4 +101,9 @@ export class Toolbar extends React.PureComponent {
     }
 }
 
-export default Toolbar;
+const map = (state: Store) => ({
+    filename: state.currentFile,
+    content: state.content,
+})
+
+export default connect(map)(Toolbar);

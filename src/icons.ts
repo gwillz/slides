@@ -12,4 +12,5 @@ library.add(
     solid.faPrint,
     solid.faFileDownload,
     solid.faFileUpload,
+    solid.faFileExport,
 )
