@@ -32,4 +32,4 @@ extend functionality.
 - add param for loading saved local files
 - image position (`alt='left|right|top-left|etc'`)
     - like a 9 position grid thing
-
+- write some examples in the placeholder
