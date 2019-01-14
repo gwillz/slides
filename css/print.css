@@ -6,13 +6,28 @@
 
 @media print {
     .present {
+        border: none;
+        counter-reset: page;
         min-height: 100%;
         min-width: 100%;
         padding: 0 2.5%;
         
         & .slide {
-            margin: 2.5% 0;
+            counter-increment: page;
             height: 40vh;
+            margin: 2.5% 0;
+            
+            &::after {
+                background: #fff;
+                border-radius: 50%;
+                content: counter(page);
+                padding: .5em;
+                position: absolute;
+                margin: .5em;
+                bottom: 0;
+                right: 0;
+                z-index: 1000;
+            }
             
             & .md {
                 font-size: 8pt !important;
