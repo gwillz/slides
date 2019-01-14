@@ -2,7 +2,6 @@
   "hosting": {
     "public": "public",
     "ignore": [
-      "*.md",
       "*.map",
       "*.log",
       "src/",
