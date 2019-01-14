@@ -4,8 +4,8 @@ import * as solid from '@fortawesome/free-solid-svg-icons'
  
 library.add(
     solid.faAdjust,
-    solid.faBroom,
     solid.faChalkboardTeacher,
+    solid.faFile,
     solid.faFileDownload,
     solid.faFolderOpen,
     solid.faPlay,

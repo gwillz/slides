@@ -38,7 +38,11 @@ export class Toolbar extends React.PureComponent<Props> {
         this.props.dispatch({type: "FULLSCREEN"});
     }
     
-    handleClear = () => {
+    handleNew = () => {
+        if (!this.props.filename) {
+            let yes = window.confirm("You will lose changes, are you sure?");
+            if (!yes) return;
+        }
         this.props.dispatch({type: "LOAD", content: ""});
     }
     
@@ -63,6 +67,11 @@ export class Toolbar extends React.PureComponent<Props> {
         
         return (
             <div className={styles('toolbar flex-nav')}>
+                <Button
+                    icon="file"
+                    title="New file"
+                    onClick={this.handleNew}
+                />
                 <Button 
                     icon="folder-open"
                     title="Save/Open files"
@@ -72,17 +81,6 @@ export class Toolbar extends React.PureComponent<Props> {
                     icon="file-download"
                     title="Export/Download"
                     onClick={this.handleDownload}
-                />
-                <div className={styles('toolbar-line')}/>
-                <Button
-                    icon="broom"
-                    title="Clear"
-                    onClick={this.handleClear}
-                />
-                <Button
-                    icon="adjust"
-                    title="Dark Mode"
-                    onClick={this.handleDark}
                 />
                 <div className={styles('toolbar-line')}/>
                 <Button 
@@ -101,6 +99,11 @@ export class Toolbar extends React.PureComponent<Props> {
                     onClick={this.handlePresent}
                 />
                 <div className={styles('toolbar-line')}/>
+                <Button
+                    icon="adjust"
+                    title="Dark Mode"
+                    onClick={this.handleDark}
+                />
                 <Button
                     icon="question"
                     title="About"
