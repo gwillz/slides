@@ -21,10 +21,11 @@ function showdownCopyCode() {
     }]
 }
 
+// @todo convert to an 'output' type
 function showdownImageFloat() {
     return [{
         type: "lang",
-        regex: /!\[([^\]]+)\]\(([^\)]+)\)/,
+        regex: /[^`]!\[([^\]]+)\]\(([^\)]+)\)/g,
         replace: `<img class="$1" src="$2" alt="$2"/>`,
     }]
 }

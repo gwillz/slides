@@ -14,7 +14,7 @@ happens locally with no server/backend getting involved.
 - Save work to browser storage
 - Export/download files
 - Print mode - includes notes written as comments `[//]: # ()`
-- URL fetching with `?url=...` - must be CORS compliant.
+- URL fetching with `?url=...` - must be CORS compliant
 
 
 ## Tech things
@@ -34,6 +34,3 @@ extend functionality.
 - rename 'clear/clean' to 'new file'
     - ask confirmation for creating new files
 - add param for loading saved local files
-- image position (`alt='left|right|top-left|etc'`)
-    - like a 9 position grid thing
-- write some examples in the placeholder

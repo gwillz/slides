@@ -4,6 +4,8 @@ public/*
 !public/index.html
 !public/404.html
 !public/favicon.ico
+!public/example.jpg
+!public/tutorial.md
 css/*.ts
 *.log
 .firebase

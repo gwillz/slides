@@ -3,7 +3,7 @@ import * as React from 'react';
 import { EditorState, Editor, ContentState, getDefaultKeyBinding, Modifier } from 'draft-js';
 import styles from './styles';
 import { connect, DispatchProp } from 'react-redux';
-import { Store, ActionTypes, PLACEHOLDER } from './store';
+import { Store, ActionTypes } from './store';
 
 const TAB = "    ";
 
@@ -133,7 +133,7 @@ export class EditorView extends React.PureComponent<Props, State> {
                 className={styles('editor scrolling')}>
                 <Editor
                     ref={r => this.editor = r}
-                    placeholder={PLACEHOLDER}
+                    placeholder="Type markdown here"
                     editorState={this.state.draft}
                     onChange={this.handleChange}
                     onTab={this.insertTab}

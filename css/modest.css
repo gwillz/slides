@@ -160,14 +160,14 @@
 
 .md img {
     display: block;
-    margin: 0 auto;
+    margin: 1em auto;
     max-width: 100%;
     
     &.left {
         float: left;
         position: relative;
         left: 0;
-        margin: 1em;
+        margin: 0 1em 1em 0;
         max-height: 100%;
         max-width: 35%;
     }
@@ -176,26 +176,23 @@
         float: right;
         position: relative;
         right: 0;
-        margin: 1em;
+        margin: 0 0 1em 1em;
         max-height: 100%;
         max-width: 35%;
     }
     
+    
+    &.hard {
+        position: absolute;
+        margin: 1em;
+    
+    }
     &.top {
         top: 0;
     }
     
     &.bottom {
         bottom: 0;
-    }
-    
-    &.left, 
-    &.right, 
-    &.bottom, 
-    &.top {
-        &.hard {
-            position: absolute;
-        }
     }
     
     &.inline {

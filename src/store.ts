@@ -3,25 +3,6 @@ import { createStore } from 'redux';
 import {persistStore, persistReducer, PersistConfig, REHYDRATE} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-export const PLACEHOLDER = `
-# Type markdown here
-
----
-
-## Create a new slide with \`---\`
-
-[//]: # (Make some notes.)
-
----
-
-![left](//${window.location.host}/example.jpg)
-
-\`\`\`python
-write("some code").like_this()
-\`\`\`
-`;
-
-
 export type ActionTypes = 'ACK' | 'LOAD' | 'EDIT' | 'OPEN' | 'FULLSCREEN' | 'RENDER' | 'DARK' | typeof REHYDRATE | null;
 export type ModalTypes = 'files' | 'help' | null;
 
@@ -85,9 +66,7 @@ const INIT_STATE: State = {
     content: '',
     dark: false,
     modal: null,
-    files: {
-        'example': PLACEHOLDER,
-    },
+    files: {},
 }
 
 function reducer(state = INIT_STATE, action: Action) {

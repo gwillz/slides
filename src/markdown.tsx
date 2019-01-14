@@ -10,8 +10,12 @@ type Props = {
 }
 
 const markdown = new showdown.Converter({
-    simplifiedAutoLink: true,
+    disableForced4SpacesIndentedSublists: true,
     excludeTrailingPunctuationFromURLs: true,
+    literalMidWordUnderscores: true,
+    noHeaderId: true,
+    simplifiedAutoLink: true,
+    strikethrough: true,
     tables: true,
 })
 

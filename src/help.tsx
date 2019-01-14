@@ -13,7 +13,9 @@ Quicky create a presentation with just a bit of
 
  * Use \`---\` to create a new slide.
  * Use \`[//]: # (...)\` to create notes.
- * add \`?url=...\` in the address bar to load remote files (must be CORS compliant).
+ * Add \`?url=...\` in the address bar to load remote files.
+
+Tutorial [here](//${window.location.host}/?url=/${window.location.host}/tutorial.md).
 
 Code [here](//git.gwillz.com/gwillz/slides).
 `
