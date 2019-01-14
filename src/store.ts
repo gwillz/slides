@@ -2,46 +2,62 @@
 import { createStore } from 'redux';
 import {persistStore, persistReducer, PersistConfig, REHYDRATE} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import files from './files';
 
 export type ActionTypes = 'ACK' | 'LOAD' | 'EDIT' | 'OPEN' | 'FULLSCREEN' | 'RENDER' | 'DARK' | typeof REHYDRATE | null;
 export type ModalTypes = 'files' | 'help' | null;
 
 type State = {
+    // the last action.type dispatched
     action: ActionTypes;
+    // current editor content (note: delayed by 200ms)
     content: string;
-    dark: boolean;
-    modal: ModalTypes;
+    // current file name, empty if new file
     currentFile?: string;
+    // dark mode toggle
+    dark: boolean;
+    // which modal is open
+    modal: ModalTypes;
+    // 'local' file store (filename -> content)
     files: {[k: string]: string};
 }
 
 type Action = {
+    // editor content updates
     type: 'EDIT';
     content: string;
 } | {
+    // file loading from ?url= or upload
     type: 'LOAD';
     filename?: string;
     content: string;
 } | {
+    // file loading from local
     type: 'OPEN';
     filename: string;
 } | {
+    // save current content to local
     type: 'SAVE';
     filename: string;
 } | {
+    // delete from local
     type: 'DELETE';
     filename: string;
 } | {
+    // open a modal
     type: 'MODAL_OPEN';
     modal: ModalTypes;
 } | {
+    // everything else
     type: 'MODAL_CLOSE' | 'RENDER' | 'FULLSCREEN' | 'DARK' | 'ACK';
 }
 
 const config: PersistConfig = {
     key: 'root',
     storage,
+    // don't store these
+    // - don't re-open modals on load
+    // - don't open last content/filename
+    // - 'action' can cause problems
     blacklist: ['action', 'modal', 'content', 'currentFile'],
 }
 
@@ -55,6 +71,8 @@ const INIT_STATE: State = {
 
 function reducer(state = INIT_STATE, action: Action) {
     switch (action.type) {
+        // load into editor, but also store in local
+        // close any open modals
         case "LOAD":
             return {
                 ...state,
@@ -65,14 +83,17 @@ function reducer(state = INIT_STATE, action: Action) {
                     ...state.files,
                     [action.filename]: action.content,
                 } : state.files,
-                modalOpen: false,
+                modal: null,
             }
+        // toggle dark mode
         case "DARK":
             return {
                 ...state,
                 action: action.type,
                 dark: !state.dark,
             }
+        // fetch content from local
+        // close any open modals
         case "OPEN":
             return {
                 ...state,
@@ -81,8 +102,9 @@ function reducer(state = INIT_STATE, action: Action) {
                 content: state.files[action.filename] || '',
                 modal: null,
             }
+        // save current content to local, with a filename
+        // close any open modals
         case "SAVE":
-            if (!action.filename) return state;
             return {
                 ...state,
                 files: {
@@ -92,6 +114,8 @@ function reducer(state = INIT_STATE, action: Action) {
                 currentFile: action.filename,
                 modal: null,
             }
+        // update content
+        // update file in local store if present
         case "EDIT":
             return {
                 ...state,
@@ -101,24 +125,32 @@ function reducer(state = INIT_STATE, action: Action) {
                     [state.currentFile]: action.content
                 } : state.files,
             }
+        // delete this file
         case "DELETE":
             delete state.files[action.filename];
             return {
                 ...state,
-                currentFile: undefined,
+                // EDIT actions will re-save unless were clear this
+                currentFile: action.filename === state.currentFile
+                    ? undefined
+                    : state.currentFile,
+                // this creates a copy of 'files'
                 files: {...state.files},
             }
+        // open a modal dialog
         case "MODAL_OPEN":
             return {
                 ...state,
                 modal: action.modal,
-            }
+        }
+        // close any open modals
         case "MODAL_CLOSE":
             return {
                 ...state,
                 modal: null,
             }
     }
+    // everything else, just store the action
     return {
         ...state,
         action: action.type,
@@ -127,7 +159,8 @@ function reducer(state = INIT_STATE, action: Action) {
 
 export const store = createStore(
     persistReducer(config, reducer),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 export const persistor = persistStore(store);

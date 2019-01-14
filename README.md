@@ -28,7 +28,11 @@ extend functionality.
 
 
 ## TODO
+- print view
+    - page numbers
+    - remove all borders (except .slides)
 - rename 'clear/clean' to 'new file'
+    - ask confirmation for creating new files
 - add param for loading saved local files
 - image position (`alt='left|right|top-left|etc'`)
     - like a 9 position grid thing
