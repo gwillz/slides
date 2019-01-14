@@ -3,27 +3,9 @@ import * as React from 'react';
 import { EditorState, Editor, ContentState, getDefaultKeyBinding, Modifier } from 'draft-js';
 import styles from './styles';
 import { connect, DispatchProp } from 'react-redux';
-import { Store, ActionTypes } from './store';
+import { Store, ActionTypes, PLACEHOLDER } from './store';
 
 const TAB = "    ";
-
-const PLACEHOLDER = `
-# Type markdown here
-
----
-
-## Create a new slide with \`---\`
-
-[//]: # (Make some notes.)
-
----
-
-![left](//${window.location.host}/example.jpg)
-
-\`\`\`python
-write("some code").like_this()
-\`\`\`
-`;
 
 function keyBinding(e: React.KeyboardEvent): string | null {
     if (e.key == "Enter" && e.ctrlKey) {

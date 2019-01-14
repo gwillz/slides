@@ -51,11 +51,13 @@ a {
         outline: 1px solid #ddd;
         overflow: hidden;
         padding: 5%;
+        position: relative;
         height: 33vw;
         width: 100%;
         
         & .md {
             margin: 0 auto;
+            min-width: 50%;
         }
     }
     
