@@ -36,7 +36,7 @@ So this is just Markdown, but with a few tweaks.
 
 **bold**
 
-~~~the world is flat.~~~
+~~strikethrough~~
 
 > multi-line
 > block quote

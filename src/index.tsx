@@ -43,6 +43,11 @@ class App extends React.Component {
 async function loadParams() {
     const params = qs.parse(window.location.search.slice(1));
     let url = params.url as string;
+    
+    if (typeof params.tutorial !== "undefined") {
+        url = window.location.host + "/tutorial.md";
+    }
+    
     if (url) {
         url = window.location.protocol + "//" + url.replace(/^http:/, '');
         
