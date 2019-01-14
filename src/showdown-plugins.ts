@@ -10,6 +10,7 @@ export default [
     showdownHighlight,
     showdownCopyCode,
     showdownImageFloat,
+    showdownBlankLinks,
 ] as any[]
 
 function showdownCopyCode() {
@@ -25,5 +26,13 @@ function showdownImageFloat() {
         type: "lang",
         regex: /!\[([^\]]+)\]\(([^\)]+)\)/,
         replace: `<img class="$1" src="$2" alt="$2"/>`,
+    }]
+}
+
+function showdownBlankLinks() {
+    return [{
+        type: 'html',
+        regex: /(<a [^>]+?)(>.*<\/a>)/g,
+        replace: '$1 target="_blank"$2'
     }]
 }
