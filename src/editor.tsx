@@ -7,6 +7,24 @@ import { Store, ActionTypes } from './store';
 
 const TAB = "    ";
 
+const PLACEHOLDER = `
+# Type markdown here
+
+---
+
+## Create a new slide with \`---\`
+
+[//]: # (Make some notes.)
+
+---
+
+![left](//${window.location.host}/example.jpg)
+
+\`\`\`python
+write("some code").like_this()
+\`\`\`
+`;
+
 function keyBinding(e: React.KeyboardEvent): string | null {
     if (e.key == "Enter" && e.ctrlKey) {
         return 'editor-render';
@@ -133,7 +151,7 @@ export class EditorView extends React.PureComponent<Props, State> {
                 className={styles('editor scrolling')}>
                 <Editor
                     ref={r => this.editor = r}
-                    placeholder="Type markdown here."
+                    placeholder={PLACEHOLDER}
                     editorState={this.state.draft}
                     onChange={this.handleChange}
                     onTab={this.insertTab}
