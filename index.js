@@ -860,7 +860,7 @@ function loadParams() {
                     params = qs__WEBPACK_IMPORTED_MODULE_5__["parse"](window.location.search.slice(1));
                     url = params.url;
                     if (typeof params.tutorial !== "undefined") {
-                        url = window.location.host + "/tutorial.md";
+                        url = window.location.host + window.location.pathname + "tutorial.md";
                     }
                     if (!url) return [3 /*break*/, 3];
                     url = window.location.protocol + "//" + url.replace(/^http:/, '');
