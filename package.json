@@ -8,8 +8,8 @@
     "webpack": "webpack --progress",
     "postcss": "postcss --verbose -o public/index.css css/index.css",
     "clean": "rm public/*.js public/*.css public/*.map || echo clean!",
-    "deploy": "bash deploy.sh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "firebase": "firebase deploy",
+    "pages": "gh-pages -d public"
   },
   "author": "Gwilyn Saunders",
   "license": "MIT",
@@ -47,6 +47,7 @@
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.8",
     "dts-css-modules-loader": "git+https://github.com/gwillz/dts-css-modules-loader.git",
+    "gh-pages": "^2.0.1",
     "postcss": "^7.0.7",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
