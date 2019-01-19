@@ -1,5 +1,5 @@
 
 import cn from 'classnames/bind'
-import {indexStyle} from '../css/indexStyle'
+import styles from '../css/index.css';
 
-export default cn.bind(indexStyle);
+export default cn.bind(styles);

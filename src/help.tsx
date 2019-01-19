@@ -37,7 +37,7 @@ export class HelpModal extends React.PureComponent<Props> {
                 'modal': true,
                 'active': this.props.isOpen,
             })}>
-                <div className={styles('inner sticky')}>
+                <div className={styles('inner', 'sticky')}>
                     <Markdown content={HELP_TEXT}/>
                     <div className={styles('stick', 'flex-nav')}>
                         <button

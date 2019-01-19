@@ -66,7 +66,7 @@ export class Toolbar extends React.PureComponent<Props> {
         const filename = this.props.filename || 'presentation';
         
         return (
-            <div className={styles('toolbar flex-nav')}>
+            <div className={styles('toolbar', 'flex-nav')}>
                 <Button
                     icon="file"
                     title="New file"

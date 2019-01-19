@@ -130,7 +130,7 @@ export class EditorView extends React.PureComponent<Props, State> {
     render() {
         return (
             <div ref={r => this.view = r}
-                className={styles('editor scrolling')}>
+                className={styles('editor', 'scrolling')}>
                 <Editor
                     ref={r => this.editor = r}
                     placeholder="Type markdown here"
