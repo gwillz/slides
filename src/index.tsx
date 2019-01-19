@@ -45,11 +45,11 @@ async function loadParams() {
     let url = params.url as string;
     
     if (typeof params.tutorial !== "undefined") {
-        url = window.location.host + "/tutorial.md";
+        url = window.location.host + window.location.pathname + "tutorial.md";
     }
     
     if (url) {
-        url = window.location.protocol + "//" + url.replace(/^http:/, '');
+        url = window.location.protocol + "//" + url.replace(/^https?:/, '');
         
         const req = await fetch(url, {
             mode: 'cors',

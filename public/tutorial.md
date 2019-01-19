@@ -90,7 +90,7 @@ abuse this and instead use it to control the image position.
 | `![right]` | float right |
 
 
-![left](/example.jpg)
+![left](example.jpg)
 This will float the image left or right. Any text should wrap neatly around it.
 
 ---
@@ -106,7 +106,7 @@ This will float the image left or right. Any text should wrap neatly around it.
 
 These should be relatively straight-forward.
 
-![big](/example.jpg)
+![big](example.jpg)
 
 ---
 
@@ -117,12 +117,12 @@ We can combine modifiers to control size _and_ position.
 With `hard` we can also position `top` and `bottom`. 
 Although note, you must combine with a `left` or a `right`.
 
-`![hard tiny top left](/example.jpg)`
+`![hard tiny top left](example.jpg)`
 
-![hard tiny top left](/example.jpg)
-![hard tiny top right](/example.jpg)
-![hard tiny bottom left](/example.jpg)
-![hard tiny bottom right](/example.jpg)
+![hard tiny top left](example.jpg)
+![hard tiny top right](example.jpg)
+![hard tiny bottom left](example.jpg)
+![hard tiny bottom right](example.jpg)
 
 ---
 
@@ -153,7 +153,7 @@ If you want to move it around to different computers, download it with the
 'download/export' button.
 
 If you can host your file online (like Dropbox or Google Drive), you can load
-it with `https://slides.gwillz.com/?url=...`. 
+it with `https://gwillz.github.io/slides/?url=...`.
 
 **Tip:**: for Dropbox, the given public link will not work. Your URL should look
 like this: `https://dl.dropboxusercontent.com/s/.../filename.md?raw=1`.
