@@ -17,7 +17,7 @@ Quicky create a presentation with just a bit of
 
 Tutorial [here](//${window.location.host}/?tutorial).
 
-Code [here](//git.gwillz.com/gwillz/slides).
+Code [here](//github.com/gwillz/slides).
 `
 
 
