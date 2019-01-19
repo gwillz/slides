@@ -41,10 +41,34 @@ module.exports = {
                     configFile: path.resolve(__dirname, 'tsconfig.json'),
                 },
             },
+            {
+                test: /\.css$/,
+                include: path.resolve(__dirname, 'css'),
+                use: [
+                    'style-loader',
+                    'dts-css-modules-loader',
+                    // {
+                    //     loader: 'dts-css-modules-loader',
+                    //     options: {
+                    //         namedExport: false,
+                    //     },
+                    // },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                            importLoaders: 1,
+                            localIdentName: '[local]',
+                        },
+                    },
+                    'postcss-loader',
+                ]
+            },
         ],
     },
     resolve: {
         extensions: [
+            '.css',
             '.js', '.json',
             '.ts', '.ts.d', '.tsx',
         ],
