@@ -13,7 +13,6 @@ module.exports = {
         // filename: isProduction ? '[id].[chunkhash].js' : '[id].js',
         filename: '[name].js',
         path: path.resolve(__dirname, 'public'),
-        publicPath: "/",
         pathinfo: false,
     },
     mode: presetMode,
