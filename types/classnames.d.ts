@@ -2,10 +2,11 @@
 declare module 'classnames/bind' {
     import 'classnames/bind'
     
-    type ClassValue<T extends string> = T | T[] | {[k in T]?: any} | undefined | null | false;
+    type ClassValue<T extends string> = T | T[] | {[k in T]?: T | undefined | null | boolean} | undefined | null | boolean;
     
-    function bind<T extends string>(styles: Record<T, string>)
+    export function bind<T extends string>(styles: Record<T, string>)
         : (...classes: ClassValue<T>[]) => string;
     
-    export default bind;
+    const cn: {bind: typeof bind};
+    export default cn;
 }
