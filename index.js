@@ -863,7 +863,7 @@ function loadParams() {
                         url = window.location.host + window.location.pathname + "tutorial.md";
                     }
                     if (!url) return [3 /*break*/, 3];
-                    url = window.location.protocol + "//" + url.replace(/^http:/, '');
+                    url = window.location.protocol + "//" + url.replace(/^https?:/, '');
                     return [4 /*yield*/, fetch(url, {
                             mode: 'cors',
                             redirect: 'follow',
