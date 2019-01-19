@@ -1,14 +1,19 @@
 
 # Markdown Slides
 
-This is largly inspired by
-[hacker-slides](https://github.com/jacksingleton/hacker-slides).
+Available [here](//slides.gwillz.com/).
 
-This is purely a client-side app, so rendering and file management all
-happens locally with no server/backend getting involved.
+I found myself presenting a class on programming recently. The slides were prepared
+by a third-party group who also provided the exam and certificate. Unfortunately, the
+material was often grossly incorrect and the code samples were images that couldn't edit.
+
+I had to quickly turn around new slides as I went through the material. I hate having
+bulky powerpoint software on my computers and I really wanted something that would
+colour highlight my code nicely without me having to think about it.
 
 
 ## Key features
+
 - Dark mode!
 - Create slides with horizontal rules `---`
 - Save work to browser storage
@@ -17,14 +22,29 @@ happens locally with no server/backend getting involved.
 - URL fetching with `?url=...` - must be CORS compliant
 
 
-## Tech things
+## Prior art
 
-It's all React and Redux. Showdown does the Markdown rendering with a 
-highlight.js plugin for code syntaxes. Draft.js is the text editor, but
-I haven't loaded it with plugins (yet) - so it's fairly boring.
+This is largly inspired by
+[hacker-slides](https://github.com/jacksingleton/hacker-slides). 
+I found by requirements weren't the same and it was a good opportunity to test a few new things.
 
-There's a fair bit of cool stuff in here and plenty of opportunity to
-extend functionality.
+Key differences; client-side only, file management, _limited_ automatic rendering.
+
+
+## Techy things
+
+- Typescript
+- React
+- Redux
+- Showdown
+- highlight.js
+- Draft.js
+- PostCSS/Webpack
+
+I think there's a fair bit of cool stuff in here and plenty of opportunity to
+extend the functionality.
+
+Ta!
 
 
 ## TODO
