@@ -95,7 +95,7 @@ export class Toolbar extends React.PureComponent<Props> {
                 />
                 <Button 
                     icon="chalkboard-teacher"
-                    title="Present Slideshow (Ctrl-F1)"
+                    title="Present Slideshow (Ctrl+F1)"
                     onClick={this.handlePresent}
                 />
                 <div className={styles('toolbar-line')}/>
