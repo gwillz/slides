@@ -9,7 +9,8 @@
     "postcss": "postcss --verbose -o public/index.css css/index.css",
     "clean": "rm public/*.js public/*.css public/*.map || echo clean!",
     "firebase": "firebase deploy",
-    "pages": "gh-pages -d public"
+    "pages": "gh-pages -d public",
+    "deploy": "bash deploy.sh"
   },
   "author": "Gwilyn Saunders",
   "license": "MIT",
