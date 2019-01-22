@@ -52,6 +52,31 @@ IE could technically work, but I wasn't bothered enough to include all the requi
 Also let me know if Safari and Edge work. That'd be cool.
 
 
+## Build/dev
+
+```sh
+# clone stuff
+git clone git@github.com:gwillz/slides
+cd slides/
+
+# install and build stuff
+npm install
+npm run webpack
+
+# dev environment (in separate terminals)
+npm run webpack -- -w
+npm start
+
+# deploy stuff
+npm run clean
+NODE_ENV=production npm run webpack
+npm run pages # this pushes to origin/gh-pages
+```
+
+Feel welcome to create PRs if you please. I'm kinda picky about things but I
+couldn't tell you what until I've seen it. I guess we'll find out!
+
+
 ## Techy things
 
 - Typescript
