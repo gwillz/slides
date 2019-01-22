@@ -20,13 +20,14 @@ colour highlight my code nicely without me having to think about it.
 - Export/download files
 - Print mode - includes notes written as comments `[//]: # ()`
 - URL fetching with `?url=...` - must be CORS compliant
+- Keyboard shortcuts galore
 
 
 ## Prior art
 
 This is largly inspired by
 [hacker-slides](https://github.com/jacksingleton/hacker-slides). 
-I found by requirements weren't the same and it was a good opportunity to test a few new things.
+I found my requirements weren't the same and it was a good opportunity to test a few new things.
 
 Key differences; client-side only, file management, _limited_ automatic rendering.
 
@@ -45,7 +46,3 @@ I think there's a fair bit of cool stuff in here and plenty of opportunity to
 extend the functionality.
 
 Ta!
-
-
-## TODO
-- add param for loading saved local files
