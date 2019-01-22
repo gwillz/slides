@@ -19,6 +19,8 @@ const markdown = new showdown.Converter({
     tables: true,
 })
 
+let PLUGINS_LOADED = false;
+
 ;(async function() {
     const plugins = await import('./showdown-plugins' /* webpackChunkName: 'plugins' */);
     
@@ -26,8 +28,10 @@ const markdown = new showdown.Converter({
         markdown.addExtension(plugin, plugin.name);
     });
     
+    PLUGINS_LOADED = true;
     store.dispatch({type: 'RENDER'});
 })();
+
 
 function doCopy(text: string) {
     const element = document.createElement('textarea');
@@ -41,8 +45,23 @@ function doCopy(text: string) {
     document.body.removeChild(element);
 }
 
+
 export class Markdown extends React.Component<Props> {
     private element: HTMLElement | null;
+    private plugins_loaded = false;
+    
+    // Perform an update once plugins are loaded.
+    // Otherwise only update on prop changes, aka PureComponent.
+    shouldComponentUpdate(props: Props) {
+        if (PLUGINS_LOADED && !this.plugins_loaded) {
+            this.plugins_loaded = true;
+            return true;
+        }
+        return (
+            this.props.className !== props.className ||
+            this.props.content !== props.content
+        )
+    }
     
     componentDidMount() {
         // mounted, but rendering is delayed by makeHtml() / DOM insertion.
