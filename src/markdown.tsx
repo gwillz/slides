@@ -6,6 +6,7 @@ import {store} from './store'
 
 type Props = {
     className?: string;
+    noScrollTo?: boolean;
     content: string;
 }
 
@@ -50,6 +51,8 @@ export class Markdown extends React.Component<Props> {
     private element: HTMLElement | null;
     private plugins_loaded = false;
     
+    static last_rendered: number;
+    
     // Perform an update once plugins are loaded.
     // Otherwise only update on prop changes, aka PureComponent.
     shouldComponentUpdate(props: Props) {
@@ -73,13 +76,28 @@ export class Markdown extends React.Component<Props> {
                 const target = button.previousElementSibling as HTMLElement;
                 if (!target) return;
                 
+                // button.removeEventListener();
                 button.addEventListener("click", event => {
                     event.stopPropagation();
                     doCopy(target.innerText);
                     return true;
                 });
             })
-        }, 300);
+        }, 350);
+    }
+    
+    // This will scroll to the last rendered slide. Although this
+    // isn't be best behaviour, it's pretty close to what we want.
+    componentDidUpdate() {
+        if (this.props.noScrollTo) return;
+        
+        clearTimeout(Markdown.last_rendered);
+        Markdown.last_rendered = setTimeout(() => {
+            this.element && this.element.scrollIntoView({
+                behavior: 'smooth', 
+                block: 'center',
+            });
+        }, 100);
     }
     
     render() {

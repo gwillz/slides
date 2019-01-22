@@ -36,6 +36,7 @@ export class PresentView extends React.Component<Props, State> {
         active: 0,
     }
     
+    private noScrollTo = true;
     private lastSelection = "";
     private element: HTMLElement | null;
     
@@ -139,12 +140,14 @@ export class PresentView extends React.Component<Props, State> {
         if (props.action === this.props.action) return;
         switch (this.props.action) {
             case "FULLSCREEN":
+                this.noScrollTo = true;
                 this.goFullscreen();
                 this.doRender();
                 this.props.dispatch({type: 'ACK'});
                 break;
                 
                 case "RENDER":
+                this.noScrollTo = false;
                 this.doRender();
                 this.props.dispatch({type: 'ACK'});
                 break;
@@ -152,6 +155,7 @@ export class PresentView extends React.Component<Props, State> {
             case "OPEN":
             case "LOAD":
                 if (props.content === this.props.content) return;
+                this.noScrollTo = true;
                 this.doRender();
                 break;
         }
@@ -179,9 +183,13 @@ export class PresentView extends React.Component<Props, State> {
                         slide: true,
                         active: i == this.state.active,
                     })}>
-                        <Markdown content={slide}/>
+                        <Markdown
+                            noScrollTo={this.noScrollTo}
+                            content={slide}
+                        />
                     </div>
                     <Markdown
+                        noScrollTo
                         className={styles('notes')}
                         content={this.state.notes[i]}
                     />
