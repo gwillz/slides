@@ -182,6 +182,7 @@ export class PresentView extends React.PureComponent<Props, State> {
                 onClick={this.handleClick}
                 className={styles('present', 'scrolling')}>
                 {this.state.slides.map((slide, i) => (
+                // this is bad. It re-creates slides from scratch on every edit.
                 <React.Fragment key={hashString(slide)}>
                     <div className={styles({
                         slide: true,

@@ -70,6 +70,8 @@ export class Markdown extends React.Component<Props> {
     }
     
     componentDidMount() {
+        this.scrollTo();
+        
         // mounted, but rendering is delayed by makeHtml() / DOM insertion.
         setTimeout(() => {
             if (!this.element) return;
@@ -89,9 +91,13 @@ export class Markdown extends React.Component<Props> {
         }, 350);
     }
     
+    componentDidUpdate() {
+        this.scrollTo();
+    }
+    
     // This will scroll to the last rendered slide. Although this
     // isn't be best behaviour, it's pretty close to what we want.
-    componentDidUpdate() {
+    public scrollTo() {
         if (!this.props.scrollTo) return;
         
         clearTimeout(Markdown.last_rendered);
