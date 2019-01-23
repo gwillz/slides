@@ -168,7 +168,6 @@ like this: `https://dl.dropboxusercontent.com/s/.../filename.md?raw=1`.
 |------------|------------------------|
 | Ctrl+O     | Open file dialog       |
 | Ctrl+F1    | Start presentation     |
-| Ctrl+Enter | Render document        |
 | Ctrl+Home  | Scroll both views up   |
 | Ctrl+End   | Scroll both views down |
 | Ctrl+1     | Focus editor           |
