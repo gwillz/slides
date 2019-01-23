@@ -18,6 +18,16 @@ function bigRegex(expr: RegExp, src: string) {
     return result;
 }
 
+// https://stackoverflow.com/a/33647870/7694753
+function hashString(input: string) {
+    const len = input.length;
+    let hash = 0, i = 0;
+    while (i < len) {
+        hash = ((hash << 5) - hash + input.charCodeAt(i++)) << 0;
+    }
+    return hash;
+}
+
 type Props = DispatchProp<Action> & {
     action: ActionTypes;
     content: string;
@@ -172,7 +182,7 @@ export class PresentView extends React.PureComponent<Props, State> {
                 onClick={this.handleClick}
                 className={styles('present', 'scrolling')}>
                 {this.state.slides.map((slide, i) => (
-                <React.Fragment key={i}>
+                <React.Fragment key={hashString(slide)}>
                     <div className={styles({
                         slide: true,
                         active: i == this.state.active,
