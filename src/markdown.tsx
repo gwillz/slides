@@ -6,7 +6,7 @@ import {store} from './store'
 
 type Props = {
     className?: string;
-    noScrollTo?: boolean;
+    scrollTo?: boolean;
     content: string;
 }
 
@@ -23,7 +23,10 @@ const markdown = new showdown.Converter({
 let PLUGINS_LOADED = false;
 
 ;(async function() {
-    const plugins = await import('./showdown-plugins' /* webpackChunkName: 'plugins' */);
+    const plugins = await import(
+        './showdown-plugins'
+        /* webpackChunkName: 'plugins' */
+    );
     
     plugins.default.forEach(plugin => {
         markdown.addExtension(plugin, plugin.name);
@@ -89,7 +92,7 @@ export class Markdown extends React.Component<Props> {
     // This will scroll to the last rendered slide. Although this
     // isn't be best behaviour, it's pretty close to what we want.
     componentDidUpdate() {
-        if (this.props.noScrollTo) return;
+        if (!this.props.scrollTo) return;
         
         clearTimeout(Markdown.last_rendered);
         Markdown.last_rendered = setTimeout(() => {

@@ -120,6 +120,7 @@ function reducer(state = INIT_STATE, action: Action) {
         case "EDIT":
             return {
                 ...state,
+                action: action.type,
                 content: action.content,
                 files: state.currentFile ? {
                     ...state.files,

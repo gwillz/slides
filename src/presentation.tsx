@@ -8,10 +8,10 @@ import { connect, DispatchProp } from 'react-redux';
 const FILTER_NOTES = /\s*\[\/\/\]:\s*#\s*\(([^\n]+)\)/g;
 
 
-function recurseRegex(expr: RegExp, src: string, index = 0) {
+function bigRegex(expr: RegExp, src: string) {
     let result = [];
     while (true) {
-        let match = FILTER_NOTES.exec(src);
+        let match = expr.exec(src);
         if (!match) break;
         result.push(match[1]);
     }
@@ -27,16 +27,17 @@ type State = {
     slides: string[];
     notes: string[];
     active: number;
+    scrollTo: boolean;
 }
 
-export class PresentView extends React.Component<Props, State> {
+export class PresentView extends React.PureComponent<Props, State> {
     state: State = {
         slides: [],
         notes: [],
         active: 0,
+        scrollTo: false,
     }
     
-    private noScrollTo = true;
     private lastSelection = "";
     private element: HTMLElement | null;
     
@@ -61,10 +62,6 @@ export class PresentView extends React.Component<Props, State> {
         switch (event.key) {
             case "F1":
                 this.goFullscreen();
-                this.doRender();
-                break;
-                
-            case "Enter":
                 this.doRender();
                 break;
                 
@@ -93,15 +90,15 @@ export class PresentView extends React.Component<Props, State> {
         }
     }
     
-    public doRender() {
+    public doRender(scrollTo = false) {
         const slides = this.props.content.split(/\n\s*---+\s*\n/);
         const notes = slides.map(slide => (
-            recurseRegex(FILTER_NOTES, slide, 1)
+            bigRegex(FILTER_NOTES, slide)
             .map(note => " + " + note)
             .join('\n')
         ));
         
-        this.setState({ slides, notes });
+        this.setState({ slides, notes, scrollTo });
     }
     
     public goFullscreen() {
@@ -140,22 +137,19 @@ export class PresentView extends React.Component<Props, State> {
         if (props.action === this.props.action) return;
         switch (this.props.action) {
             case "FULLSCREEN":
-                this.noScrollTo = true;
                 this.goFullscreen();
-                this.doRender();
                 this.props.dispatch({type: 'ACK'});
                 break;
                 
-                case "RENDER":
-                this.noScrollTo = false;
-                this.doRender();
+            case "RENDER":
+            case "EDIT":
+                this.doRender(true);
                 this.props.dispatch({type: 'ACK'});
                 break;
                 
             case "OPEN":
             case "LOAD":
                 if (props.content === this.props.content) return;
-                this.noScrollTo = true;
                 this.doRender();
                 break;
         }
@@ -184,12 +178,11 @@ export class PresentView extends React.Component<Props, State> {
                         active: i == this.state.active,
                     })}>
                         <Markdown
-                            noScrollTo={this.noScrollTo}
+                            scrollTo={this.state.scrollTo}
                             content={slide}
                         />
                     </div>
                     <Markdown
-                        noScrollTo
                         className={styles('notes')}
                         content={this.state.notes[i]}
                     />

@@ -8,9 +8,6 @@ import { State as Store, Action, ActionTypes } from './store';
 const TAB = "    ";
 
 function keyBinding(e: React.KeyboardEvent): string | null {
-    if (e.key == "Enter" && e.ctrlKey) {
-        return 'editor-render';
-    }
     if (e.key == "s" && e.ctrlKey) {
         e.preventDefault();
         return 'editor-save';
@@ -83,18 +80,14 @@ export class EditorView extends React.PureComponent<Props, State> {
             clearTimeout(this.timer);
             this.timer = setTimeout(() => {
                 this.props.dispatch({ type: 'EDIT', content });
-            }, 350);
+            }, 600);
         }
         
-        this.setState({ 
-            draft,
-            content,
-        });
+        this.setState({ draft, content });
     }
     
     private handleCommand = (command: string) => {
         switch (command) {
-            case 'editor-render':
             case 'editor-save':
             case 'editor-open':
                 return 'handled';

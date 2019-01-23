@@ -30,10 +30,6 @@ export class Toolbar extends React.PureComponent<Props> {
         });
     }
     
-    handlePreview = () => {
-        this.props.dispatch({type: "RENDER"});
-    }
-    
     handlePresent = () => {
         this.props.dispatch({type: "FULLSCREEN"});
     }
@@ -51,7 +47,6 @@ export class Toolbar extends React.PureComponent<Props> {
     }
     
     handlePrint = () => {
-        this.props.dispatch({type: "RENDER"});
         setTimeout(() => window.print(), 250);
     }
     
@@ -83,11 +78,6 @@ export class Toolbar extends React.PureComponent<Props> {
                     onClick={this.handleDownload}
                 />
                 <div className={styles('toolbar-line')}/>
-                <Button 
-                    icon="play"
-                    title="Render Preview (Ctrl+Enter)"
-                    onClick={this.handlePreview}
-                />
                 <Button 
                     icon="print"
                     title="Print with notes (Ctrl+P)"
