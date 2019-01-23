@@ -2,10 +2,10 @@
 import * as React from 'react';
 import styles from './styles';
 import {Button} from './button';
-import {Store} from './store'
+import {State as Store, Action} from './store'
 import { connect, DispatchProp } from 'react-redux';
 
-type Props = DispatchProp & {
+type Props = DispatchProp<Action> & {
     content: string;
     filename?: string;
 }

@@ -2,7 +2,7 @@
 import * as React from 'react'
 import styles from './styles';
 import { connect, DispatchProp } from 'react-redux';
-import { Store } from './store';
+import { State as Store, Action } from './store';
 import { Markdown } from './markdown';
 
 const HELP_TEXT = `
@@ -21,7 +21,7 @@ Code [here](//github.com/gwillz/slides).
 `
 
 
-type Props = DispatchProp & {
+type Props = DispatchProp<Action> & {
     isOpen: boolean;
 }
 

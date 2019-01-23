@@ -3,7 +3,7 @@ import * as React from 'react';
 import { EditorState, Editor, ContentState, getDefaultKeyBinding, Modifier } from 'draft-js';
 import styles from './styles';
 import { connect, DispatchProp } from 'react-redux';
-import { Store, ActionTypes } from './store';
+import { State as Store, Action, ActionTypes } from './store';
 
 const TAB = "    ";
 
@@ -22,7 +22,7 @@ function keyBinding(e: React.KeyboardEvent): string | null {
     return getDefaultKeyBinding(e);
 }
 
-type Props = DispatchProp & {
+type Props = DispatchProp<Action> & {
     action: ActionTypes;
     content: string;
 }

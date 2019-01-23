@@ -3,9 +3,9 @@ import * as React from 'react'
 import * as qs from 'qs'
 import style from './styles'
 import { connect, DispatchProp } from 'react-redux';
-import { Store } from './store';
+import { State as Store, Action } from './store';
 
-type Props = React.HTMLProps<HTMLDivElement> & DispatchProp & {
+type Props = React.HTMLProps<HTMLDivElement> & DispatchProp<Action> & {
     isDark?: boolean;
 }
 

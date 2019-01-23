@@ -3,16 +3,13 @@ import { createStore } from 'redux';
 import {persistStore, persistReducer, PersistConfig, REHYDRATE} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-export type ActionTypes = 'ACK' | 'LOAD' | 'EDIT' | 'OPEN' | 'FULLSCREEN' | 'RENDER' | 'DARK' | typeof REHYDRATE | null;
-export type ModalTypes = 'files' | 'help' | null;
-
-type State = {
+export type State = {
     // the last action.type dispatched
     action: ActionTypes;
     // current editor content (note: delayed by 200ms)
     content: string;
     // current file name, empty if new file
-    currentFile?: string;
+    currentFile: string | null;
     // dark mode toggle
     dark: boolean;
     // which modal is open
@@ -21,7 +18,7 @@ type State = {
     files: {[k: string]: string};
 }
 
-type Action = {
+export type Action = {
     // editor content updates
     type: 'EDIT';
     content: string;
@@ -51,6 +48,10 @@ type Action = {
     type: 'MODAL_CLOSE' | 'RENDER' | 'FULLSCREEN' | 'DARK' | 'ACK';
 }
 
+export type ModalTypes = 'files' | 'help' | null;
+
+export type ActionTypes = Action['type'] | typeof REHYDRATE | null;
+
 const config: PersistConfig = {
     key: 'root',
     storage,
@@ -64,6 +65,7 @@ const config: PersistConfig = {
 const INIT_STATE: State = {
     action: null,
     content: '',
+    currentFile: null,
     dark: false,
     modal: null,
     files: {},
@@ -77,7 +79,7 @@ function reducer(state = INIT_STATE, action: Action) {
             return {
                 ...state,
                 action: action.type,
-                currentFile: action.filename,
+                currentFile: action.filename || null,
                 content: action.content,
                 files: action.filename ? {
                     ...state.files,
@@ -89,7 +91,6 @@ function reducer(state = INIT_STATE, action: Action) {
         case "DARK":
             return {
                 ...state,
-                action: action.type,
                 dark: !state.dark,
             }
         // fetch content from local
@@ -132,7 +133,7 @@ function reducer(state = INIT_STATE, action: Action) {
                 ...state,
                 // EDIT actions will re-save unless were clear this
                 currentFile: action.filename === state.currentFile
-                    ? undefined
+                    ? null
                     : state.currentFile,
                 // this creates a copy of 'files'
                 files: {...state.files},
@@ -158,11 +159,9 @@ function reducer(state = INIT_STATE, action: Action) {
 }
 
 export const store = createStore(
-    persistReducer(config, reducer),
+    persistReducer<State, Action>(config, reducer),
     window.__REDUX_DEVTOOLS_EXTENSION__ &&
     window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 export const persistor = persistStore(store);
-
-export type Store = State;

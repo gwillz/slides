@@ -2,10 +2,10 @@
 import * as React from 'react'
 import styles from './styles';
 import { connect, DispatchProp } from 'react-redux';
-import { Store } from './store';
+import { State as Store, Action } from './store';
 import { string } from 'prop-types';
 
-type Props = DispatchProp & {
+type Props = DispatchProp<Action> & {
     isOpen: boolean;
     filename: string;
     fileslist: string[];

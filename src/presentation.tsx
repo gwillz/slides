@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import styles from './styles';
-import {ActionTypes, Store} from './store';
+import {ActionTypes, State as Store, Action} from './store';
 import { Markdown } from './markdown';
 import { connect, DispatchProp } from 'react-redux';
 
@@ -18,7 +18,7 @@ function recurseRegex(expr: RegExp, src: string, index = 0) {
     return result;
 }
 
-type Props = DispatchProp & {
+type Props = DispatchProp<Action> & {
     action: ActionTypes;
     content: string;
 }
