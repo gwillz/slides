@@ -18,16 +18,6 @@ function bigRegex(expr: RegExp, src: string) {
     return result;
 }
 
-// https://stackoverflow.com/a/33647870/7694753
-function hashString(input: string) {
-    const len = input.length;
-    let hash = 0, i = 0;
-    while (i < len) {
-        hash = ((hash << 5) - hash + input.charCodeAt(i++)) << 0;
-    }
-    return hash;
-}
-
 type Props = DispatchProp<Action> & {
     action: ActionTypes;
     content: string;
@@ -107,7 +97,12 @@ export class PresentView extends React.PureComponent<Props, State> {
             .map(note => " + " + note)
             .join('\n')
         ));
-        
+        // Force no-scroll if adding or deleting slides.
+        // When the list size changes, the node keys may change and cause
+        // an unplanned re-render.
+        if (slides.length !== this.state.slides.length) {
+            scrollTo = false;
+        }
         this.setState({ slides, notes, scrollTo });
     }
     
@@ -182,8 +177,7 @@ export class PresentView extends React.PureComponent<Props, State> {
                 onClick={this.handleClick}
                 className={styles('present', 'scrolling')}>
                 {this.state.slides.map((slide, i) => (
-                // this is bad. It re-creates slides from scratch on every edit.
-                <React.Fragment key={hashString(slide)}>
+                <React.Fragment key={i}>
                     <div className={styles({
                         slide: true,
                         active: i == this.state.active,
