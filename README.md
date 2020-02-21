@@ -85,9 +85,19 @@ couldn't tell you what until I've seen it. I guess we'll find out!
 - Showdown
 - highlight.js
 - Draft.js
-- PostCSS/Webpack
+- PostCSS
+- Webpack
 
 I think there's a fair bit of cool stuff in here and plenty of opportunity to
 extend the functionality.
 
 Ta!
+
+
+## TODOs
+
+- Remove draft.js
+- Use cachebuster file names
+- Make the divider draggable
+- Mobile view? top/bottom instead of left/right
+- Refactor files names
