@@ -15,7 +15,7 @@ Quicky create a presentation with just a bit of
  * Use \`[//]: # (...)\` to create notes.
  * Add \`?url=...\` in the address bar to load remote files.
 
-Tutorial [here](//${window.location.host}/?tutorial).
+Tutorial [here](//${window.location.host}${window.location.pathname}?tutorial).
 
 Code [here](//github.com/gwillz/slides).
 `
